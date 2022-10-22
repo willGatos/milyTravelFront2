@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;1,300&display=swap');
+p{
+
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  border: 0;
+}
+
+a {
+  color: #0a74a7;
+  text-decoration: none;
+}
+iframe{
+  height: 50px !important;
+}
+.shopContainer{
+  background-image: url("../public/authPic.png");
+  height: 100vh;
+}
+.shopFormContainer{
+  background-color: #ffffffdb;
+  width: 350px;
+  padding: 50px;
+  border-radius: 15px;
+}
+.MilyLogo{
+  width: 100px;
+}
+.contact-container{
+  background: white;
+  width: 80%;
+  height: 85%;
+  margin: auto;
+  padding: 30px;
+}
+.redButton {
+  width: 100px;
+  height: 30px;
+  border-radius: 30px;
+  color: white;
+  background-color:#AF353D;
+  margin-top: 15px;
+  font-size: 14px;
+
+}
+.hero-section-button{
+  height: 40px;
+  width: 210px;
+  border-radius: 50px;
+  margin-top: 35px;
+}
+.home-page-footer{
+  background: linear-gradient(123deg,#18465E, white);
+  padding: 40px 0;
+  display: flex;
+}
+.logoFromContact{
+  width: 90px;
+  bottom: 20px;
+  transform: translate(0%,25%);
+}
+.HomeMiddleSection{
+  background-image: url("../public/Bg-Circle.png");
+  background-size: contain;
+}
+.buttonsContainer button{
+  border-radius: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  width: 50px;
+  height: 25px;
+}
+.activeButton{
+  background: linear-gradient(rgb(23, 0, 231), rgb(207, 13, 13));
+  color: white;
+  border: 0px;
+}
+.combosContainer{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: "20px";
+  justify-items: center;
+}
+.goBackComboButton{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  align-items: center;
+  margin: auto;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+.activeLink{
+  border-bottom: 1px solid #0a74a7;
+}
+.seeComboDialogButton{
+  width: 120px;
+  height: 30px;
+  margin: 10px;
+  background: #C96B4F;
+  border-radius: 15px;
+  color: white;
+  font-size: 16px;
+}
+.authContainer{
+  width: 100%;
+  height: 100vh;
+  background-image: url("../public/authPic.png");
+  background-size: cover;
+}
+.formContainer{
+  width: 50vw;
+  height: 50vh;
+  background: #ffffff96;
+  padding: 50px;
+  border-radius: 15px;
+}
+
+button{
+  border: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.flex{
+  display: flex;
+}
+.justify-space-between{
+  justify-content: space-between;
+}
+.justify-space-around{
+  justify-content: space-around;
+}
+.justify-center{
+  justify-content: center;
+}
+.justify-space-evenly{
+  justify-content: space-evenly;
+}
+.align-center{
+  align-items: center;
+  align-content: center;
+}
+.align-end{
+  align-items: flex-end;
+  align-content: flex-end;
+}
+.align-start{
+  align-items: flex-start;
+  align-content: flex-start;
+}
+.text-center{
+  text-align: center;
+}
+.flex-column{
+  flex-direction: column;
+}
+.bg-black{
+  background-color: rgba(0, 0, 0, 0.59);
+}
+.bg-red{
+  background-color: #AF353D;
+}
+.bg-blue{
+  background-color: #1F569D;
+}
+.font-color-w{
+  color: white;
+}
+.width-40{
+  width: 40%;
+}
+.width-100{
+  width: 100vw;
+}
+.width-full{
+  width: 100%;
+}
+.absolute{
+  position: absolute;
+}
+.relative{
+  position: relative;
+}
+.box-shadow-basic{
+  box-shadow: rgb(99, 99, 99) 0px 2px 15px 0px;
+}
+.grandPaImg{
+  z-index: -1;
+}
+.footerBarDimensions{
+  height: 250px;
+  width: 1px;
+}
+.navbar{
+  height: 45px;
+  background: #ffffffa6;
+  position: fixed;
+  width: 100vw;
+  z-index: 10000;
+}
+.navbar a{
+  margin: 15px;
+}
+
+.height-100{
+  min-height: 100vh;
+}
+.buttonArrow{
+  margin-left: 15px;
+  width: 15px;
+}
+
+.main {
+  background-image: url("../public/happyFamily.webp");
+  background-size: cover;
+}
+
+.contactFormDimensions{
+  width: 40%;
+}
+
+@media (min-width: 428px) {
+  .navbarLinks a{
+    font-size: medium;
+  }
+}
+@media (max-width: 800px) {
+  .responsiveMainContent {
+    min-height: 45vh;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+  .main {
+    background-position: -430px 0px;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+  }
+  .contact-container{
+    flex-direction: column;
+  }
+  .footerBarDimensions{
+    height: 2px;
+    width: 144px;
+    position: static;
+    margin: 50px;
+    background: #1e4b62;
+  }
+  .contactFormDimensions{
+    width: 80%;
+  }
+  .logoFromContact{
+    position: static;
+  }
+  .formContainer{
+    width: 80vw;
+    height: 60vh;
+  }
+}
+@media (max-width: 600px) {
+  .main {
+    background-position: -430px 0px;
+  }
+
+}
+
