@@ -9,6 +9,7 @@ function ComboSelector({value, object, setObject}) {
         console.log(value, object)
         setObject({...object, [input]: e.target.value})
   }
+  
   return (
     <FormControl variant="standard" sx={{width: "100%"}}>
       <InputLabel id="demo-simple-select-helper-label">Combo a entregar</InputLabel>
