@@ -3,7 +3,7 @@
   "name": "Mily Travel",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "https://res.cloudinary.com/dq98mlb66/image/upload/c_scale,h_192,w_192/v1666563045/MilyTravel_p5uads.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
