@@ -1,18 +1,17 @@
 import { TextField } from "@mui/material";
 
-function BarInputMultirow({label, value,placeholder, object, setObject, row}) {
+function BarInputMultirow({name, label, value,placeholder, object, setObject, row}) {
     const handleData = input => e =>{
-        console.log(label,value, object)
         setObject({...object, [input]: e.target.value})
     }
     return <TextField
                 multiline
                 rows={row}
-                name={label}
+                name={name}
                 label={label}
                 value={value}
                 placeholder={placeholder}
-                onChange={handleData(label)}
+                onChange={handleData(name)}
                 variant="standard"
                 required
             />

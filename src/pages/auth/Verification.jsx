@@ -18,7 +18,7 @@ const [formValues, setFormValues] = useState({
     const onSubmit = (event) =>{
         event.preventDefault()
 
-        axios.post("http://localhost:3001/user/verification", formValues)
+        axios.post("https://api.milytravel.net/user/verification", formValues)
         .then((response)=> {
 
         const {accessToken, clientData} = response.data;

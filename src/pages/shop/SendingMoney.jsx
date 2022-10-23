@@ -40,7 +40,7 @@ function SendingMoney() {
       }
     })
     if( accessToken )
-    axios.post("http://localhost:3001/buys/getReceivers",clientData,
+    axios.post("https://api.milytravel.net/buys/getReceivers",clientData,
     {headers: {'Authorization': 'Bearer '+ accessToken}})
     .then(e => {
       const user = e.data;
@@ -63,7 +63,7 @@ function SendingMoney() {
       <div
        className='shopContainer flex flex-column justify-center align-center'>
         <MultiStepForm
-          route={"http://localhost:3001/buys/sendMoney"}
+          route={"https://api.milytravel.net/buys/sendMoney"}
           DTO={sendingMoney}
           setDTO={setSendingMoney}
         >

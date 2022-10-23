@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import Alert from "@mui/material/Alert";
 import Stack from '@mui/material/Stack';
-
+import EmailState from "../../common/components/EmailState";
 function SendEmailToRecoverPass() {
   const [email, setEmail] = useState("")
   const [stateOfEmail, setStateOfEmail] = useState("")
@@ -17,7 +17,7 @@ function SendEmailToRecoverPass() {
     event.preventDefault();
     setStateOfEmail("Loading")
 
-    axios.post("http://localhost:3001/user/sendEmailToChangePassword", { email })
+    axios.post("https://api.milytravel.net/user/sendEmailToChangePassword", { email })
     .then((response)=>{
       if(response.data) setStateOfEmail("success")
       else setStateOfEmail("fail")
@@ -32,14 +32,7 @@ function SendEmailToRecoverPass() {
   <div style={{zIndex: "15",top: "50px",left: "50%",transform: "translate(-50%,50%)",width: "202px"}}
    className="absolute">
       {stateOfEmail !== "" &&
-      <Stack sx={{ width: '100%',  }} spacing={2}>
-      {stateOfEmail == "fail"
-          && <Alert severity="error">Error en el Envío</Alert>}
-          {stateOfEmail == "success" 
-          && <Alert severity="success">Envío Éxitoso</Alert>}
-          {stateOfEmail == "Loading"
-          && <Alert severity="info">Cargando</Alert>}
-      </Stack>
+        <EmailState stateOfEmail={stateOfEmail}/>
       }
   </div>
       <AuthFormWrapper onSubmit={onSubmit}>

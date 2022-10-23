@@ -16,15 +16,15 @@ import ComboCarousel from '../common/components/ComboCarousel'
 import grandpaImage from "../public/excited-grandpa.png"
 import ArrowRight from "../public/ArrowRight.svg"
 import MilyTravel from "../public/MilyTravel.png"
-
-
-
+import axios from 'axios'
+import EmailState from '../common/components/EmailState'
 export default function Home() {
   const [sendEmailObject, setSendEmailObject] = useState({
     name: "",
     email: "",
     emailBody: "",
   })
+  const [stateOfEmail, setStateOfEmail ] = useState("")
   const {accessToken, setAccessToken, 
     setSelectedComboToBuy, setRouteToNavigate} = useContext(UserContext);
   const Router = useHistory()
@@ -37,7 +37,23 @@ export default function Home() {
   const [selectedCombo, setSelectedCombo] = useState(combos[0])
   const [openDialog, setOpenDialog] = useState(false)
 
-  
+  const sendEmail = () => {
+    setStateOfEmail("Loading")
+    axios.post("https://www.api.milytravel.net/user/sendSuggestion", sendEmailObject)
+    .then(()=>  {
+      setStateOfEmail("success")
+      setTimeout(()=>{
+        setStateOfEmail("")
+      },5000)
+    })
+    .catch(()=> {
+      setTimeout(()=>{
+        setStateOfEmail("")
+      },3000)
+      setStateOfEmail("fail")})
+
+    
+  }
 
   const OpenDialogAndCheckCombo = (Combo) => {
     setSelectedCombo(Combo)
@@ -104,6 +120,16 @@ export default function Home() {
           className='contact-container flex justify-space-evenly align-center box-shadow-basic relative'
         >
           <section className='flex flex-column contactFormDimensions'>
+          <div 
+            style={{zIndex: "15",top: "50px",left: "50%",
+                    transform: "translate(-50%,50%)",
+                    width: "202px"}}
+
+            className="absolute">
+                {stateOfEmail !== "" &&
+                  <EmailState stateOfEmail={stateOfEmail}/>
+                }
+          </div>
             <div>
               <h3>Estamos a tú disposición</h3>
               <p>¿Cómo podemos ayudarte?</p>
@@ -131,6 +157,7 @@ export default function Home() {
                 setObject={setSendEmailObject}
               />
               <button
+                onClick={()=>sendEmail()}
                 style={{marginTop: "20px"}}
                 className='hero-section-button bg-red font-color-w text-center flex justify-center align-center'
               >
