@@ -30,7 +30,9 @@ function NavbarTop({children}) {
             </div>
           </div>
           :
-          <div className="align-center navbarLinks flex justify-center">
+          <div
+            style={{fontSize: "18px", marginRight: "2vw"}}
+            className="align-center navbarLinks flex justify-center">
             <Link to={"/auth/login"}>Iniciar Sesión</Link>
             <Link to={"/auth/register"}>Suscribirse</Link>
           </div>

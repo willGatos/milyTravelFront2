@@ -12,9 +12,6 @@ function Step2({DTO, setDTO}) {
     setDTO({...DTO, [input]: e.target.value})
   }
 
-  useEffect(()=>{
-    console.log("23")
-  },[])
   return (
     <div style={{width: "100%"}} className='flex flex-column justify-center'>
       <h3>Información del Destinatario</h3>
