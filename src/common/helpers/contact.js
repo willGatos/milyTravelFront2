@@ -10,9 +10,9 @@ const contactItems = [
         height: "23px"
     },
     {
-        href: "mailto:soporte@militravel.com", 
+        href: "mailto:milytravelandtour@gmail.com", 
         iconRef:emailIcon,
-        text: "soporte@militravel.com",
+        text: "milytravelandtour@gmail.com",
         height: "15px"
     },
     {
