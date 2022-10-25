@@ -3,7 +3,8 @@ const combos = [
         name: "Combo Mixto 1",
         price: "105",
         image: "https://res.cloudinary.com/dq98mlb66/image/upload/v1666563055/Combo_Mixto_1_zmzsrk.jpg",
-        contains: ["Mixto","Pollo"]
+        contains: ["Mixto","Pollo"],
+        isAvailable: true
     },{
         name: "Combo Mixto 2",
         price: "115",

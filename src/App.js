@@ -20,6 +20,7 @@ import PasswordChange from './pages/auth/PasswordChange';
 
 import UserContext from './common/helpers/userContext';
 import Home from './pages';
+import Admin from './pages/admin';
 
 function App() {
   const [clientData, setClientData] = useState({})
@@ -48,6 +49,8 @@ function App() {
 
               <Route path="/shop/sendingMoney" exact component={SendingMoney}/>
               <Route path="/shop/buyingCombos" exact component={BuyingCombos}/>
+
+              <Route path="/admin" exact component={Admin}/>
             </Switch>
   </UserContext.Provider>
           </>

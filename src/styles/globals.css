@@ -227,12 +227,35 @@ button{
   width: 40%;
 }
 
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #ffffff;
+  border-top: 10px solid #0b0b0b;
+  border-radius: 50%;
+  animation: spinner 0.9s linear infinite;
+}
+.spinner-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  width: auto;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @media (min-width: 428px) {
   .navbarLinks a{
     font-size: medium;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 810px) {
   .responsiveMainContent {
     min-height: 45vh;
     align-content: center;
@@ -241,7 +264,7 @@ button{
     justify-content: center;
   }
   .main {
-    background-position: -430px 0px;
+    background-position: -330px 0px;
     align-items: center;
     align-content: center;
     justify-content: flex-end;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 import { Dialog } from '@mui/material'
-
+import Cards from '../common/components/Cards'
 import socialNetworkItems from '../common/helpers/socialNetwork'
 import contactItems from '../common/helpers/contact'
 import combos from '../common/helpers/combosRelationship'
@@ -18,6 +18,7 @@ import ArrowRight from "../public/ArrowRight.svg"
 import MilyTravel from "../public/MilyTravel.png"
 import axios from 'axios'
 import EmailState from '../common/components/EmailState'
+
 export default function Home() {
   const [sendEmailObject, setSendEmailObject] = useState({
     name: "",
@@ -89,7 +90,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-
       <section className='HomeMiddleSection' style={{margin: "70px 0"}}>
         <div className='flex flex-column justify-center align-center text-center'>
           <h3>Seleccione el combo correcto</h3>
