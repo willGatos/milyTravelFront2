@@ -19,7 +19,7 @@ function Success({query2}) {
       }
       if(query.amount){
         console.log("Router.query.amount",query)
-        axios.post("https://api.milytravel.net/buys/sendMoney", query,{
+        axios.post("https://api.milytravel.net/buys/sendingMoney", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))

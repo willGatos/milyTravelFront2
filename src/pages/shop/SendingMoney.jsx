@@ -31,7 +31,7 @@ function SendingMoney() {
 
   useEffect(()=>{
     const accessToken = localStorage.getItem("accessToken")
-    setRouteToNavigate("/shop/sendMoney")
+    setRouteToNavigate("/shop/sendingMoney")
     setSendingMoney( () => {
       return {
         ...sendingMoney,
@@ -63,7 +63,7 @@ function SendingMoney() {
       <div
        className='shopContainer flex flex-column justify-center align-center'>
         <MultiStepForm
-          route={"https://api.milytravel.net/buys/sendMoney"}
+          route={"https://api.milytravel.net/buys/sendingMoney"}
           DTO={sendingMoney}
           setDTO={setSendingMoney}
         >
