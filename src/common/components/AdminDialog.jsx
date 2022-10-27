@@ -72,7 +72,7 @@ function AdminDialog({
                   borderRadius: "8px"
               }}
               className='seeComboDialogButton'>
-              Actualizar
+              Guardar
             </button>
         </form>
       </Dialog>

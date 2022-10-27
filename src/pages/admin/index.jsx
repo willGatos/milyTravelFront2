@@ -112,10 +112,14 @@ function Admin() {
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
-          setAllCombos([toCreateCombo, ...allCombos])
+          setAllCombos([e.data, ...allCombos])
           //TODO: Cartel de Operacion Exitosa
+          setOpenCreateDialog(false)
         })
-        .catch(res => console.log("TODO: Operacion Fallida"))
+        .catch(res => {
+          setOpenCreateDialog(false)
+          console.log("TODO: Operacion Fallida")
+        })
         
       }
 
@@ -131,8 +135,9 @@ function Admin() {
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
+          console.log(e.data)
           setAllCombos(prevAllCombos => {
-
+            
             const value =  prevAllCombos.map(e => {
                 console.log(e.name === selectedCombo.name, e.name, selectedCombo.name)
                 if(e.name === selectedCombo.name) {
@@ -163,7 +168,10 @@ function Admin() {
       }
 
       useEffect(()=>{
-        axios.get("https://api.milytravel.net/buys/getComboToUsers")
+        const accessToken = localStorage.getItem("accessToken")
+        axios.get("https://api.milytravel.net/buys/getComboToAdmin",{
+          headers: {'Authorization': 'Bearer '+ accessToken}
+          } )
         .then((response)=> {
           const visibleCombos = response.data
           console.log("vis" , visibleCombos)
@@ -187,19 +195,16 @@ function Admin() {
       },[])
 
   return (
+    <>
+    <div className="flex justify-center" style={{paddingTop: "65px"}}>
+      <button className="createButton" onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
+    </div>
     <div
-     style={{flexWrap: "wrap", gap: "30px", paddingTop: "65px"}}
+     style={{flexWrap: "wrap", gap: "30px", paddingTop: "35px"}}
      className="flex justify-center">
-        <button onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
         {allCombos.map((singleCombo, key)=>
-        <div 
-        key={key}
-        onClick={ ()=> {
-          console.log(singleCombo)
-          setSelectedCombo(singleCombo)
-          setUpdateValues(singleCombo)
-        }}>
             <Cards
+            key={key}
               _id={singleCombo._id}
               comboName={singleCombo.name}
               imageUrl={singleCombo.image}
@@ -207,8 +212,11 @@ function Admin() {
               isAvailable={singleCombo.isAvailable}
               setOpenDialog={setOpenUpdateDialog}
               deleteCombo={deleteCombo}
+              setSelectedCombo={setSelectedCombo}
+              setUpdateValues={setUpdateValues}
+              singleCombo={singleCombo}
             />
-        </div>)}
+            )}
 
         <AdminDialog
           handleData={handleDataForUpdate}
@@ -232,6 +240,7 @@ function Admin() {
           updateValues={toCreateCombo}
         />
     </div>
+    </>
   )
 }
 

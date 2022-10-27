@@ -13,6 +13,15 @@
   }
 }
 
+.createButton{
+  background: #1e86d2;
+  color: white;
+  border-radius: 15px;
+  width: 120px;
+  font-size: 15px;
+  height: 35px;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

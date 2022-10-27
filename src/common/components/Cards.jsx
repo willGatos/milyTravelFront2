@@ -15,10 +15,16 @@ export default function Cards({
   price, 
   isAvailable, 
   setOpenDialog,
-  deleteCombo
+  deleteCombo,
+  setSelectedCombo,
+  setUpdateValues,
+  singleCombo
 }) {
   return (
-    <Card sx={{ maxWidth: 345, border: `1px solid ${isAvailable ? "#8f6" : "red"}` }}>
+    <Card onClick={()=>{
+      setUpdateValues(singleCombo)
+      setSelectedCombo(singleCombo)
+      }} sx={{ maxWidth: 345, border: `1px solid ${isAvailable ? "#8f6" : "red"}` }}>
       <LazyLoadImage
         alt={comboName}
         width={"345"}
