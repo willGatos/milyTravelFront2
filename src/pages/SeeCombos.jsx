@@ -1,29 +1,41 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import combos from "../common/helpers/combosRelationship"
 import {motion, AnimatePresence} from "framer-motion"
 import Dialog from "@mui/material/Dialog"
-import { useContext } from 'react';
 import UserContext from '../common/helpers/userContext';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
 
 function SeeCombos() {
+
+  const {setRouteToNavigate,setSelectedComboToBuy, 
+          accessToken, newCombos, setNewCombos} = useContext(UserContext);
+
   const [actualFilter, setActualFilter] = useState("")
-  const [selectedCombo, setSelectedCombo] = useState(combos[0])
-  const [arrayFiltered, setArrayFiltered] = useState(combos)
+  const [selectedCombo, setSelectedCombo] = useState(newCombos[0])
+  const [arrayFiltered, setArrayFiltered] = useState(newCombos)
   const [openDialog, setOpenDialog] = useState(false)
 
-  const {setRouteToNavigate,setSelectedComboToBuy, accessToken} = useContext(UserContext);
+  useEffect(()=>{
+    axios.get("http://localhost:3001/buys/getComboToUsers")
+    .then((response)=> {
+      const visibleCombos = response.data
+      console.log("vis",visibleCombos)
+      setNewCombos(visibleCombos)
+    })
+  },[])
 
   const Router = useHistory()
 
   useEffect(()=>{
     console.log("Combos",combos)
-    setArrayFiltered(() => combos.filter(combo => {
+    setArrayFiltered(() => newCombos.filter(combo => {
       console.log(combo.contains.includes(actualFilter))
       if(actualFilter) return  combo.contains.includes(actualFilter)
       else return true
     }))
-  },[actualFilter])
+  },[actualFilter, newCombos])
 
   const OpenDialogAndCheckCombo = (Combo) => {
     setSelectedCombo(Combo)

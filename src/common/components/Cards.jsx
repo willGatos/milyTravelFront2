@@ -9,6 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 export default function Cards({
+  _id,
   comboName, 
   imageUrl, 
   price, 
@@ -44,7 +45,9 @@ export default function Cards({
          size="small"><EditIcon sx={{color: "white"}} color={"white"}/></button>
 
         <button 
-          onClick={()=>{deleteCombo(comboName)}}
+          onClick={()=>{
+            deleteCombo(_id)
+          }}
           size="small" style={{
             background: "#d21e1e",
             borderRadius: "8px"

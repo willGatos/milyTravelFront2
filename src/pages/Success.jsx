@@ -12,14 +12,14 @@ function Success({query2}) {
     if(hasRun.current){
       if(query.combo){
         console.log("Router.query.combo",query)
-        axios.post("https://api.milytravel.net/buys/sendCombo", query,{
+        axios.post("http://localhost:3001/buys/sendCombo", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))
       }
       if(query.amount){
         console.log("Router.query.amount",query)
-        axios.post("https://api.milytravel.net/buys/sendMoney", query,{
+        axios.post("http://localhost:3001/buys/sendMoney", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))
@@ -39,7 +39,7 @@ function Success({query2}) {
         <p style={{borderRight: "1px solid",padding: "15px"}}>Transacción Exitosa</p>
         <Link 
         style={{margin: "15px"}}
-        href={"/"}>Página Principal</Link>
+        to={"/"}>Página Principal</Link>
     </div>
   )
 }

@@ -7,19 +7,20 @@ import Switch from '@mui/material/Switch';
 function AdminDialog({
     openDialog, 
     setOpenDialog, 
-    updateData, 
+    callToActionFunction, 
     updateValues, 
     handlePrincipalImageChange,
     isLoading,
     handleData,
     handleChange
 }) {
+
   return (
     <div>
         <Dialog 
             open={openDialog}
             onClose={()=>setOpenDialog(false)}>
-        <form onSubmit={updateData}
+        <form onSubmit={callToActionFunction}
             style={{padding: "80px", gap: "10px"}}
             className='flex justify-center align-center flex-column'>
           <img 
@@ -27,33 +28,33 @@ function AdminDialog({
             src={updateValues.image} 
             alt=""
           />
-            <input 
+          <input 
             type="file" 
             onChange={handlePrincipalImageChange} 
             accept="image/*"
-            />
+          />
         {isLoading && 
         <div style={{margin: "auto", overflow: "hidden"}} className="spinner-container">
             <div className="loading-spinner"></div>
         </div>}
             <TextField
-            name={"name"}
-            sx={{width:"100%"}}
-            value={updateValues.name}
-            label={"Nombre"}
-            onChange={handleData("name")}
-            required
-            variant="standard"
+              name={"name"}
+              sx={{width:"100%"}}
+              value={updateValues.name}
+              label={"Nombre"}
+              onChange={handleData("name")}
+              required
+              variant="standard"
             />
 
             <TextField
-            name={"price"}
-            sx={{width:"100%"}}
-            value={updateValues.price}
-            label={"Precio"}
-            onChange={handleData("price")}
-            required
-            variant="standard"
+              name={"price"}
+              sx={{width:"100%"}}
+              value={updateValues.price}
+              label={"Precio"}
+              onChange={handleData("price")}
+              required
+              variant="standard"
             />
 
             <FormGroup>
@@ -63,16 +64,16 @@ function AdminDialog({
                 defaultChecked />} label="Label" />
             </FormGroup>
 
-          <button 
-            disabled={isLoading}
-            type="submit"
-            style={{
-                background: "rgb(30, 134, 210)",
-                borderRadius: "8px"
-            }}
-            className='seeComboDialogButton'>
-            Actualizar
-          </button>
+            <button 
+              disabled={isLoading}
+              type="submit"
+              style={{
+                  background: "rgb(30, 134, 210)",
+                  borderRadius: "8px"
+              }}
+              className='seeComboDialogButton'>
+              Actualizar
+            </button>
         </form>
       </Dialog>
     </div>

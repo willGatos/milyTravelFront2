@@ -29,7 +29,7 @@ function Register() {
       email: registerObject.email,
       password: registerObject.password,
     }
-    setApiCall("post", "https://api.milytravel.net/user/signup", toSendRegisterObject)
+    setApiCall("post", "http://localhost:3001/user/signup", toSendRegisterObject)
     .then( response => {
       Router.push("verification")})
     .catch(()=>console.log("Error De Nuevo"))

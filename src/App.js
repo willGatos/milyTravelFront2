@@ -1,10 +1,13 @@
 import './App.css';
 import './styles/globals.css'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Route, Switch } from "react-router-dom";
 
-import NavbarTop from './common/components/Navbar'
+import combos from './common/helpers/combosRelationship';
+import NavbarTop from './common/components/Navbar';
+import UserContext from './common/helpers/userContext';
+
 import Cancel from './pages/Cancel';
 import Success from './pages/Success';
 import SeeCombos from './pages/SeeCombos';
@@ -17,22 +20,25 @@ import Register from './pages/auth/Register';
 import SendEmailToRecoverPass from './pages/auth/SendEmailToRecoverPass';
 import Verification from './pages/auth/Verification';
 import PasswordChange from './pages/auth/PasswordChange';
-
-import UserContext from './common/helpers/userContext';
+import axios from "axios"
 import Home from './pages';
 import Admin from './pages/admin';
 
 function App() {
+
   const [clientData, setClientData] = useState({})
   const [routeToNavigate, setRouteToNavigate] = useState("/")
   const [selectedComboToBuy, setSelectedComboToBuy] = useState({})
   const [accessToken, setAccessToken] = useState("")
+  const [newCombos, setNewCombos] = useState(combos)
+
   return (<>
   <UserContext.Provider value={{
       accessToken,        setAccessToken,
       clientData,         setClientData,
       routeToNavigate,    setRouteToNavigate,
       selectedComboToBuy, setSelectedComboToBuy,
+      newCombos,          setNewCombos
     }}>
             <NavbarTop/>
             <Switch>

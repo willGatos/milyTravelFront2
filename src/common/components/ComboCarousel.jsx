@@ -1,12 +1,23 @@
-import {useState} from "react"
+import {useState, useEffect, useContext} from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ReactSimplyCarousel from 'react-simply-carousel';
-import combos from '../helpers/combosRelationship';
 import ArrowLeft from "../../public/LeftArrow.svg"
 import ArrowRight from "../../public/ArrowRight.svg"
+import axios from "axios";
+import combos from "../helpers/combosRelationship";
+import UserContext from "../helpers/userContext";
 
 function ComboCarousel({OpenDialogAndCheckCombo}) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const {newCombos,setNewCombos}=useContext(UserContext)
+  useEffect(()=>{
+    axios.get("http://localhost:3001/buys/getComboToUsers")
+    .then((response)=> {
+      const visibleCombos = response.data
+      console.log("vis",visibleCombos)
+      setNewCombos(visibleCombos)
+    })
+  },[])
   return (
     <ReactSimplyCarousel
     activeSlideIndex={activeSlideIndex}
@@ -57,14 +68,23 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
     speed={400}
     easing="linear"
   >
-    {combos.map((combo, key)=>(
-        <LazyLoadImage
-        onClick={()=> OpenDialogAndCheckCombo(combo)}
-        key={key}
-        alt={combo.name}
-        width={"320px"}
-        src={combo.image} />
-    ))}
+    {newCombos.map((combo, key)=>{console.log(combo, key)
+    return(
+      <LazyLoadImage
+      onClick={()=> OpenDialogAndCheckCombo(combo)}
+      key={key}
+      alt={combo.name}
+      width={"320px"}
+      src={combo.image} /> 
+    )
+  })
+    }
+      {/* 
+      ))}*/
+      }
+    
+        
+    
     </ReactSimplyCarousel>
 )
 }

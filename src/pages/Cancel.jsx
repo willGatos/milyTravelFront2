@@ -10,7 +10,7 @@ function Cancel() {
         <p style={{borderRight: "1px solid",padding: "15px"}}>Transacción Cancelada</p>
         <Link 
         style={{margin: "15px"}}
-        href={"/"}>Página Principal</Link>
+        to={"/"}>Página Principal</Link>
     </div>
   )
 }

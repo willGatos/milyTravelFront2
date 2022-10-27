@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../../common/helpers/userContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import combos from "../../common/helpers/combosRelationship";
@@ -16,20 +17,30 @@ function Admin() {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const [updateValues, setUpdateValues] = useState  ({name:"", price:"", image: "", contains: []})
-    const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", contains: []})
-    
+
+    const { newCombos, setNewCombos } = useContext(UserContext)
+    const [updateValues, setUpdateValues] =  useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
+    const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
+
     const Router = useHistory()
 
-    const handleData = input => e =>{
+    const handleDataForUpdate = input => e =>{
         setUpdateValues({...updateValues, [input]: e.target.value})
       }
 
-    const handleChange = (event) => {
+    const handleChangeForUpdate = (event) => {
         setUpdateValues({...updateValues, isAvailable : event.target.checked});
       };
 
-    const handlePrincipalImageChange = (e)=>{
+    const handleDataForCreating = input => e =>{
+      setToCreateCombo({...toCreateCombo, [input]: e.target.value})
+      }
+
+    const handleChangeForCreating = (event) => {
+      setToCreateCombo({...toCreateCombo, isAvailable : event.target.checked});
+      };
+
+      const handlePrincipalImageChangeToUpdate = (e)=>{
         const file = e.target.files[0];
 
         setIsLoading(true)
@@ -60,88 +71,166 @@ function Admin() {
               console.log("error2",err);
             },
           })
-  }
+      }
+      const handlePrincipalImageChangeToCreate = (e)=>{
+    const file = e.target.files[0];
 
-  const createCombo = () =>{
-    setAllCombos([...allCombos, toCreateCombo])
-  }
+    setIsLoading(true)
 
-  const updateData = (event)=>{
-    event.preventDefault()
-    console.log("hola");
-    setAllCombos(prevAllCombos => {
+    new Compressor(file, {
+        quality: 0.9,
 
-        const value =  prevAllCombos.map(e => {
-            console.log(e.name === selectedCombo.name, e.name, selectedCombo.name)
-            if(e.name === selectedCombo.name) {
-                return updateValues;
-            }
-            return e;
+        success(result) {
+          console.log(isLoading)
+          const formData = new FormData();
+          formData.append("file", result)
+          formData.append("upload_preset", `zfvhwnfp`)
+          axios.post("https://api.cloudinary.com/v1_1/milytravel/image/upload",formData)
+          .then(e =>{
+            const url = e.data.secure_url;
+            setToCreateCombo( { ...toCreateCombo, image: url } );
+            setIsLoading(false)
+            return url;
         })
-        console.log(prevAllCombos,value);
-        return value;
-    } )
-    setOpenUpdateDialog(false)
+  
+        .catch( e => {
+            
+          setIsLoading(false)
+          console.log(e)
+        })},
+        error(err) {
+          setIsLoading(false)
+          console.log("error2",err);
+        },
+      })
+      }
 
-  }
+      const createCombo = (event) =>{
+        const accessToken = localStorage.getItem("accessToken");
+        event.preventDefault()
+        axios.post("http://localhost:3001/buys/createCombo",toCreateCombo,{
+        headers: {'Authorization': 'Bearer '+ accessToken}
+        })
+        .then((e)=>{
+          setAllCombos([toCreateCombo, ...allCombos])
+          //TODO: Cartel de Operacion Exitosa
+        })
+        .catch(res => console.log("TODO: Operacion Fallida"))
+        
+      }
 
-  const deleteCombo = (name) => {
-    const accessToken = localStorage.getItem("accessToken")
-    setAllCombos(allCombos.filter(e => e.name !== name))
-    /* axios.delete(`http://localhost:3001/buys/combos/${id}`,{
-            headers: {'Authorization': 'Bearer '+ accessToken}
+      const updateData = (event)=>{
+        event.preventDefault()
+        const accessToken = localStorage.getItem("accessToken");
+        const toUpdateObject = {
+          comboId: selectedCombo._id,
+          updateDTO: updateValues,
+        }
+        
+        axios.post("http://localhost:3001/buys/combosUpdate", toUpdateObject,{
+        headers: {'Authorization': 'Bearer '+ accessToken}
+        })
+        .then((e)=>{
+          setAllCombos(prevAllCombos => {
+
+            const value =  prevAllCombos.map(e => {
+                console.log(e.name === selectedCombo.name, e.name, selectedCombo.name)
+                if(e.name === selectedCombo.name) {
+                    return updateValues;
+                }
+                return e;
             })
-        .then(e => {if(!e.data.isAdmin) Router.push("/")})
-        .catch( e => console.log(e) ) */
-  }
+            console.log(prevAllCombos,value);
+            return value;
+        } )
+        setOpenUpdateDialog(false)
+          //TODO: Cartel de Operacion Exitosa
+        })
+        .catch(res => console.log("TODO: Operacion Fallida"))
+       
 
-    useEffect(()=>{
+      }
+
+      const deleteCombo = (_id) => {
+        const accessToken = localStorage.getItem("accessToken")
+        axios.delete(`http://localhost:3001/buys/CombosDelete/${_id}`,{
+          headers: {'Authorization': 'Bearer '+ accessToken}
+        })
+        .then(e => {
+          setAllCombos(allCombos.filter(e => e._id !== _id));
+        })
+        .catch(e => console.log(e) )
+      }
+
+      useEffect(()=>{
+        axios.get("http://localhost:3001/buys/getComboToUsers")
+        .then((response)=> {
+          const visibleCombos = response.data
+          console.log("vis" , visibleCombos)
+          setAllCombos(visibleCombos)
+        })
+      },[])
+
+      useEffect(()=>{
         const accessToken = localStorage.getItem("accessToken")
 
-        /* if(!accessToken) Router.push("/")
-        axios.get("http://localhost:3001/user/fullUser",{
-            headers: {'Authorization': 'Bearer '+ accessToken}
-            }
-        ).then(e => {
-            if(!e.data.isAdmin) Router.push("/")
-            }
-        )
-        .catch( e => console.log(e) ) */
-
-    })
+        if(!accessToken) Router.push("/")
+            axios.get("http://localhost:3001/user/fullUser",{
+                headers: {'Authorization': 'Bearer '+ accessToken}
+                }
+            ).then(e => {
+                if(!e.data.isAdmin) Router.push("/")
+                console.log("isAdmin ",e.data.isAdmin)
+                }
+            )
+            .catch( e => console.log(e) )
+      },[])
 
   return (
     <div
      style={{flexWrap: "wrap", gap: "30px", paddingTop: "65px"}}
      className="flex justify-center">
-        <button >Crear Combo</button>
-        {allCombos.map((singleCombo, key)=>        
+        <button onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
+        {allCombos.map((singleCombo, key)=>
         <div 
         key={key}
         onClick={ ()=> {
-            setSelectedCombo(singleCombo)
-            setUpdateValues(singleCombo)
-            } }>
-            <Cards 
-             comboName={singleCombo.name}
-             imageUrl={singleCombo.image}
-             price={singleCombo.price}
-             isAvailable={singleCombo.isAvailable}
-             setOpenDialog={setOpenUpdateDialog}
-             deleteCombo={deleteCombo}
+          console.log(singleCombo)
+          setSelectedCombo(singleCombo)
+          setUpdateValues(singleCombo)
+        }}>
+            <Cards
+              _id={singleCombo._id}
+              comboName={singleCombo.name}
+              imageUrl={singleCombo.image}
+              price={singleCombo.price}
+              isAvailable={singleCombo.isAvailable}
+              setOpenDialog={setOpenUpdateDialog}
+              deleteCombo={deleteCombo}
             />
         </div>)}
 
         <AdminDialog
-        handleData={handleData}
-        handlePrincipalImageChange={handlePrincipalImageChange}
-        isLoading={isLoading}
-        openDialog={setOpenUpdateDialog}
-        setOpenDialog={setOpenUpdateDialog}
-        updateData={updateData}
-        updateValues={updateValues}
+          handleData={handleDataForUpdate}
+          handleChange={handleChangeForUpdate}
+          handlePrincipalImageChange={handlePrincipalImageChangeToUpdate}
+          isLoading={isLoading}
+          openDialog={openUpdateDialog}
+          setOpenDialog={setOpenUpdateDialog}
+          callToActionFunction={updateData}
+          updateValues={updateValues}
         />
-        
+
+        <AdminDialog
+          handleData={handleDataForCreating}
+          handleChange={handleChangeForCreating}
+          handlePrincipalImageChange={handlePrincipalImageChangeToCreate}
+          isLoading={isLoading}
+          openDialog={openCreateDialog}
+          setOpenDialog={setOpenCreateDialog}
+          callToActionFunction={createCombo}
+          updateValues={toCreateCombo}
+        />
     </div>
   )
 }

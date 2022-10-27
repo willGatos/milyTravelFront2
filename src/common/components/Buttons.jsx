@@ -16,7 +16,7 @@ function Buttons({ DTO, actualStep, setActualStep }) {
     }
     const accessToken = localStorage.getItem("accessToken")
 
-    fetch("https://api.milytravel.net/buys/create-checkout-session", {
+    fetch("http://localhost:3001/buys/create-checkout-session", {
     method: "POST",
     headers: { 
       "Content-Type": "application/json",

@@ -3,17 +3,14 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 import { Dialog } from '@mui/material'
-import Cards from '../common/components/Cards'
 import socialNetworkItems from '../common/helpers/socialNetwork'
 import contactItems from '../common/helpers/contact'
-import combos from '../common/helpers/combosRelationship'
 import UserContext from '../common/helpers/userContext'
 
 import BarInput from '../common/components/BarInput'
 import BarInputMultirow from '../common/components/BarInputMultirow'
 import ComboCarousel from '../common/components/ComboCarousel'
 
-import grandpaImage from "../public/excited-grandpa.png"
 import ArrowRight from "../public/ArrowRight.svg"
 import MilyTravel from "../public/MilyTravel.png"
 import axios from 'axios'
@@ -26,8 +23,8 @@ export default function Home() {
     emailBody: "",
   })
   const [stateOfEmail, setStateOfEmail ] = useState("")
-  const {accessToken, setAccessToken, 
-    setSelectedComboToBuy, setRouteToNavigate} = useContext(UserContext);
+  const {accessToken,           setAccessToken, 
+         setSelectedComboToBuy, setRouteToNavigate} = useContext(UserContext);
   const Router = useHistory()
 
   useEffect(() => {
@@ -35,12 +32,18 @@ export default function Home() {
     setRouteToNavigate("/");
   }, [])
 
-  const [selectedCombo, setSelectedCombo] = useState(combos[0])
+  const [selectedCombo, setSelectedCombo] = useState({
+    name: "Combo Mixto 1",
+    price: "105",
+    image: "https://res.cloudinary.com/dq98mlb66/image/upload/v1666563055/Combo_Mixto_1_zmzsrk.jpg",
+    contains: ["Mixto","Pollo"],
+    isAvailable: true
+  })
   const [openDialog, setOpenDialog] = useState(false)
 
   const sendEmail = () => {
     setStateOfEmail("Loading")
-    axios.post("https://api.milytravel.net/user/sendSuggestion", sendEmailObject)
+    axios.post("http://localhost:3001/user/sendSuggestion", sendEmailObject)
     .then(()=>  {
       setStateOfEmail("success")
       setTimeout(()=>{
@@ -48,13 +51,10 @@ export default function Home() {
       },5000)
     })
     .catch(()=> {
-      setTimeout(()=>{
-        setStateOfEmail("")
-      },3000)
-      setStateOfEmail("fail")})
-
-    
-  }
+      setTimeout(()=>{setStateOfEmail("")},3000)
+      setStateOfEmail("fail")
+    })
+    }
 
   const OpenDialogAndCheckCombo = (Combo) => {
     setSelectedCombo(Combo)
@@ -93,13 +93,13 @@ export default function Home() {
       <section className='HomeMiddleSection' style={{margin: "70px 0"}}>
         <div className='flex flex-column justify-center align-center text-center'>
           <h3>Seleccione el combo correcto</h3>
-          <ComboCarousel
+          {<ComboCarousel
             selectedCombo={selectedCombo}
             OpenDialogAndCheckCombo={OpenDialogAndCheckCombo}
-          />
+          />}
           <Link
             style={{margin: "25px 0"}}
-            href={"seeCombos"}
+            to={"/seeCombos"}
             >
             <div 
               style={{margin: "15px"}} 
@@ -159,7 +159,7 @@ export default function Home() {
               <button
                 onClick={()=>sendEmail()}
                 style={{marginTop: "20px"}}
-                className='hero-section-button bg-red font-color-w text-center flex justify-center align-center'
+                className='contact-section-button bg-red font-color-w text-center flex justify-center align-center'
               >
                 Enviar
               </button>
@@ -186,7 +186,7 @@ export default function Home() {
               </a>
             ))}
             </div>
-            <div className='width-full flex justify-space-around align-center'>
+            <div style={{width: "200px"}} className='flex justify-space-around align-center'>
             {socialNetworkItems.map((socialNetwork, key)=> (
               <a target="_blank" rel="noreferrer" key={key} href={socialNetwork.href}>
                 <img style={{height: socialNetwork.height}} src={socialNetwork.iconRef}/>
