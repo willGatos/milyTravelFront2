@@ -11,7 +11,7 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const {newCombos,setNewCombos}=useContext(UserContext)
   useEffect(()=>{
-    axios.get("http://localhost:3001/buys/getComboToUsers")
+    axios.get("https://api.milytravel.net/buys/getComboToUsers")
     .then((response)=> {
       const visibleCombos = response.data
       console.log("vis",visibleCombos)

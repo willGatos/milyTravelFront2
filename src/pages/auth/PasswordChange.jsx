@@ -19,7 +19,7 @@ function PasswordChange() {
 
         setStateOfPasswordSended("Loading")
 
-        axios.post("http://localhost:3001/user/changePassword", {
+        axios.post("https://api.milytravel.net/user/changePassword", {
             password: passwordConfirmation.password,
             jwt
         })
