@@ -64,16 +64,28 @@ function AdminDialog({
                 defaultChecked />} label="Label" />
             </FormGroup>
 
-            <button 
-              disabled={isLoading}
-              type="submit"
-              style={{
-                  background: "rgb(30, 134, 210)",
+            <div className="flex justify-center">
+              <button 
+                disabled={isLoading}
+                onClick={()=>setOpenDialog(false)}
+                style={{
+                  background: "rgb(210, 30, 30)",
                   borderRadius: "8px"
-              }}
-              className='seeComboDialogButton'>
-              Guardar
-            </button>
+                }}
+                className='seeComboDialogButton'>
+                Cancelar
+              </button>
+              <button 
+                disabled={isLoading}
+                type="submit"
+                style={{
+                    background: "rgb(30, 134, 210)",
+                    borderRadius: "8px"
+                }}
+                className='seeComboDialogButton'>
+                Guardar
+              </button>
+            </div>
         </form>
       </Dialog>
     </div>
