@@ -67,7 +67,7 @@ export default function Home() {
         <div className='responsiveMainContent width-40 height-100 font-color-w bg-black flex justify-center align-start flex-column'>
           <div style={{padding: "0 50px"}} >
             <h1>Ayuda a tus seres queridos ahora mismo</h1>
-            <p style={{fontSize: "20px"}}>Enviales una pequeña remesa o uno de nuestros suplicios alimenticios.</p>
+            <p style={{fontSize: "20px"}}>Enviales una pequeña remesa o uno de nuestros suplementos alimenticios.</p>
             <button 
             onClick={()=>{
               accessToken ?

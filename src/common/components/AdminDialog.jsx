@@ -61,7 +61,7 @@ function AdminDialog({
                 <FormControlLabel control={<Switch 
                 checked={updateValues.isAvailable}
                 onChange={handleChange}
-                defaultChecked />} label="Label" />
+                defaultChecked />} label="Disponibilidad" />
             </FormGroup>
 
             <div className="flex justify-center">
