@@ -123,7 +123,6 @@ iframe{
 }
 .formContainer{
   width: 50vw;
-  height: 50vh;
   background: #ffffff96;
   padding: 50px;
   border-radius: 15px;
@@ -295,7 +294,6 @@ button{
   }
   .formContainer{
     width: 80vw;
-    height: 60vh;
   }
 }
 @media (max-width: 600px) {

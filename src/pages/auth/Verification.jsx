@@ -5,29 +5,37 @@ import axios from "axios";
 import signHandler from "../../common/helpers/signHandler";
 import UserContext from "../../common/helpers/userContext";
 import { useHistory } from 'react-router-dom'
+import { Alert } from '@mui/material'
 
 function Verification() {
 const [formValues, setFormValues] = useState({
     email: "", 
     verificationCode: ""
 })
+const [emailIsSend, setEmailIsSend] = useState(false)
 
     const {setClientData, setAccessToken, routeToNavigate} = useContext(UserContext)
     const Router = useHistory();
 
     const onSubmit = (event) =>{
         event.preventDefault()
-
+        if(formValues.verificationCode){
         axios.post("https://api.milytravel.net/user/verification", formValues)
         .then((response)=> {
-
         const {accessToken, clientData} = response.data;
-
         signHandler(accessToken, clientData, setClientData, setAccessToken);
-
         Router.push(routeToNavigate);
         })
         .catch((e) => console.log("Error De Nuevo", e))
+        }
+
+        else {
+          axios.post("https://api.milytravel.net/user/resendEmail", formValues)
+          .then(()=>setEmailIsSend(true))
+          .catch((e)=>{
+            console.log(e)
+          })
+        }
     }
 
   const handleChange = input => e =>{
@@ -37,6 +45,7 @@ const [formValues, setFormValues] = useState({
 
   return (
     <AuthFormWrapper onSubmit={onSubmit}>
+      {emailIsSend && <Alert severity="success">Envío Éxitoso    </Alert>}
         <TextField
             required
             label="Email"
