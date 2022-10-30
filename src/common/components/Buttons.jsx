@@ -10,12 +10,13 @@ function Buttons({ DTO, actualStep, setActualStep }) {
       DTO.stripeProductPrice = comboObject[0].price
     }
     if(DTO.amount) {
+      let serviceCharge = 0;
       console.log("amount", DTO.amount)
       DTO.stripeProductName = "Envío de Remesa"
       DTO.stripeProductPrice = DTO.amount
     }
     const accessToken = localStorage.getItem("accessToken")
-
+    
     fetch("https://api.milytravel.net/buys/create-checkout-session", {
     method: "POST",
     headers: { 

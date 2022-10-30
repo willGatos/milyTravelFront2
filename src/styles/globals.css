@@ -149,6 +149,12 @@ button{
 .justify-center{
   justify-content: center;
 }
+.justify-start{
+  justify-content: start;
+}
+.justify-end{
+  justify-content: end;
+}
 .justify-space-evenly{
   justify-content: space-evenly;
 }
@@ -227,7 +233,7 @@ button{
 }
 
 .main {
-  background-image: url("https://res.cloudinary.com/dq98mlb66/image/upload/v1666563055/happyFamily_gtldzt.webp");
+  background-image: url("https://res.cloudinary.com/milytravel/image/upload/v1666858619/ijnnbcrhrd2xtpfcpsqs.webp");
   background-size: cover;
 }
 

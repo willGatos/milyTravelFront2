@@ -32,6 +32,20 @@ function App() {
   const [accessToken, setAccessToken] = useState("")
   const [newCombos, setNewCombos] = useState(combos)
 
+  useEffect(()=>{
+    const accessToken = localStorage.getItem("accessToken")
+
+    if(accessToken)
+        axios.get("https://api.milytravel.net/user/fullUser",{
+            headers: {'Authorization': 'Bearer '+ accessToken}
+            }
+        ).then(e => {
+          console.log("Client Data",e.data)
+          setClientData(e.data)
+        })
+        .catch( e => console.log(e) )
+  },[])
+
   return (<>
   <UserContext.Provider value={{
       accessToken,        setAccessToken,

@@ -34,6 +34,9 @@ function Step1({
     })
     
   };
+  const handleData = input => e =>{
+    setDTO({...DTO, [input]: e.target.value})
+}
 
   return (
     <div style={{width: "100%"}} className='flex flex-column justify-center'>
@@ -56,13 +59,20 @@ function Step1({
       sx={{width: "100%"}}
       />
 
-      <BarInput
-      name={"paymentType"}
-      label={"Moneda a la Entrega"}
-      value={DTO.paymentType}
-      object={DTO}
-      setObject={setDTO}
-      sx={{width: "100%"}}/>
+      <Select
+        label='Moneda a Entregar'
+        name={"paymentType"}
+        value={DTO.paymentType}
+        onChange={handleData("paymentType")}
+        color="primary"
+        required
+        sx={{width: "100%"}}
+      >
+
+           <MenuItem value={"Moneda Nacional"}>Moneda Nacional</MenuItem>
+           <MenuItem value={"MLC"}>MLC</MenuItem>
+           <MenuItem value={"Dolar Américano"}>Dólar Américano</MenuItem>
+      </Select>
 
       <BarInput
       name={"amount"}

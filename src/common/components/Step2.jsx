@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react'
 import BarInput from './BarInput'
 import townshipProvince from '../helpers/townshipProvince';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-
+import { TextField } from '@mui/material';
 function Step2({DTO, setDTO}) {
 
   const handleData = input => e =>{
@@ -79,14 +78,13 @@ function Step2({DTO, setDTO}) {
             })}
           </Select>
           </FormControl>
-
-      <BarInput
-        name={"city"}
-        label={"Ciudad"}
-        object = {DTO}
-        setObject={setDTO}
-        value={DTO.city}
-        sx={{width: "100%"}}/>
+        <TextField
+          sx={{width: "100%"}}
+                name={"city"}
+                label={"Reparto"}
+                value={DTO.city}
+                onChange={handleData("city")}
+            />
 
       <BarInput
         name={"address"}

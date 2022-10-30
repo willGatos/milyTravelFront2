@@ -12,7 +12,7 @@ function BarInput({name,label, value, object, setObject, variant="standard", sx=
                 value={value}
                 onChange={handleData(name)}
                 variant={variant}
-                required
+                required 
             />
 }
 
