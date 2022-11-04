@@ -111,7 +111,7 @@ function Admin() {
       const createCombo = (event) =>{
         const accessToken = localStorage.getItem("accessToken");
         event.preventDefault()
-        axios.post("http://localhost:3001/buys/createCombo",toCreateCombo,{
+        axios.post("https://api.milytravel.net/buys/createCombo",toCreateCombo,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -134,7 +134,7 @@ function Admin() {
           updateDTO: updateValues,
         }
         
-        axios.post("http://localhost:3001/buys/combosUpdate", toUpdateObject,{
+        axios.post("https://api.milytravel.net/buys/combosUpdate", toUpdateObject,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -159,7 +159,7 @@ function Admin() {
 
       const deleteCombo = (_id) => {
         const accessToken = localStorage.getItem("accessToken")
-        axios.delete(`http://localhost:3001/buys/CombosDelete/${_id}`,{
+        axios.delete(`https://api.milytravel.net/buys/CombosDelete/${_id}`,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then(e => {
@@ -170,7 +170,7 @@ function Admin() {
 
       useEffect(()=>{
         const accessToken = localStorage.getItem("accessToken")
-        axios.get("http://localhost:3001/buys/getComboToAdmin",{
+        axios.get("https://api.milytravel.net/buys/getComboToAdmin",{
           headers: {'Authorization': 'Bearer '+ accessToken}
           } )
         .then((response)=> {
@@ -184,7 +184,7 @@ function Admin() {
         const accessToken = localStorage.getItem("accessToken")
 
         if(!accessToken) Router.push("/")
-            axios.get("http://localhost:3001/user/fullUser",{
+            axios.get("https://api.milytravel.net/user/fullUser",{
                 headers: {'Authorization': 'Bearer '+ accessToken}
                 }
             ).then(e => {

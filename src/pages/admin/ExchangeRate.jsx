@@ -17,14 +17,14 @@ function ExchangeRate() {
     const accessToken = localStorage.getItem("accessToken");
     
     axios.get(
-    "http://localhost:3001/currency/get",
+    "https://api.milytravel.net/currency/get",
     {headers: {'Authorization': 'Bearer '+ accessToken}}
     ).then((e)=> { setCurrencies(e.data) })
     }, [])
 
     const deleteCombo = (_id) => {
         const accessToken = localStorage.getItem("accessToken")
-        axios.delete(`http://localhost:3001/currency/delete/${_id}`,{
+        axios.delete(`https://api.milytravel.net/currency/delete/${_id}`,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         }).then(e => setCurrencies(actualCurrencies.filter(e => {
             console.log(e._id !== _id);

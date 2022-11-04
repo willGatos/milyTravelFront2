@@ -12,14 +12,14 @@ function Success({query2}) {
     if(hasRun.current){
       if(query.combo){
         console.log("Router.query.combo",query)
-        axios.post("http://localhost:3001/buys/sendCombo", query,{
+        axios.post("https://api.milytravel.net/buys/sendCombo", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))
       }
       if(query.amount){
         console.log("Router.query.amount",query)
-        axios.post("http://localhost:3001/buys/sendingMoney", query,{
+        axios.post("https://api.milytravel.net/buys/sendingMoney", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))

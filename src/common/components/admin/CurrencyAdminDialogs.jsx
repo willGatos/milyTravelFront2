@@ -37,7 +37,7 @@ function CurrencyAdminDialogs({
     const createCombo = (event) =>{
         const accessToken = localStorage.getItem("accessToken");
         event.preventDefault()
-        axios.post("http://localhost:3001/currency/create",createCurrencyToDeliever,{
+        axios.post("https://api.milytravel.net/currency/create",createCurrencyToDeliever,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -62,7 +62,7 @@ function CurrencyAdminDialogs({
         }
         console.log("toUpdateObject",toUpdateObject);
         
-        axios.patch("http://localhost:3001/currency/update", toUpdateObject,{
+        axios.patch("https://api.milytravel.net/currency/update", toUpdateObject,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
