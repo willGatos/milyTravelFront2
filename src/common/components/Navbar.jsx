@@ -29,8 +29,8 @@ function NavbarTop({children}) {
           ?
           <div style={{width: "100%"}}>
             <div className=" text-center">
-            {accessToken && <button onClick={closeSession} className="buttonNavbar text-animation">Cerrar Sesión</button>}
-            {clientData.isAdmin && <button onClick={()=> route.push("/admin")} className="buttonNavbar text-animation">Admin</button>}
+            {accessToken && <button onClick={closeSession} className="buttonNavbar">Cerrar Sesión</button>}
+            {clientData.isAdmin && <button onClick={()=> route.push("/admin")} className="buttonNavbar ">Admin</button>}
             </div>
 
             <div style={{fontSize: "18px", marginRight: "2vw"}} className="align-end navbarLinks flex justify-end">
