@@ -20,16 +20,18 @@ function SubmitButton({DTO, usableCurrency}) {
         if(DTO.amount) {
           
           DTO.stripeProductName = "Envío de Remesa"
-          DTO.stripeProductPrice = DTO.amount
 
           usableCurrency.map( currency => {
             if( currency.nameOfTheCurrency === DTO.paymentType ){
-              if( DTO.amount <= currency.intermediateValueToChangeRate){
+              let amountToPay = DTO.amount / currency.exchangeRateValuePerDollar
+              DTO.stripeProductPrice = amountToPay;
+
+              if( amountToPay <= currency.intermediateValueToChangeRate){
                 serviceCharge.priceInCents = +currency.underIntermediateValueChargeToSum;
               }
-              if( DTO.amount > currency.intermediateValueToChangeRate ){
+              if( amountToPay > currency.intermediateValueToChangeRate ){
                 let percentageToExchange = currency.overIntermediateValueChargeInPercentage / 100;
-                let valueToCharge = DTO.amount * percentageToExchange
+                let valueToCharge = amountToPay * percentageToExchange
                 serviceCharge.priceInCents = +valueToCharge;
               }
             }
