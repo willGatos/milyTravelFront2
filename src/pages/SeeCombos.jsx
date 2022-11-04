@@ -18,7 +18,7 @@ function SeeCombos() {
   const [openDialog, setOpenDialog] = useState(false)
 
   useEffect(()=>{
-    axios.get("https://api.milytravel.net/buys/getComboToUsers")
+    axios.get("http://localhost:3001/buys/getComboToUsers")
     .then((response)=> {
       const visibleCombos = response.data
       console.log("vis",visibleCombos)

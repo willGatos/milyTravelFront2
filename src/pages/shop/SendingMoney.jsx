@@ -10,16 +10,19 @@ function SendingMoney() {
     clientName: "",
     email: "",
     amount: 1,
-    paymentType: "",
+    paymentType: "Dolar Américano",
     creditCard: "",
     //DEL DESTINATARIO
     receiverName: "",
     carnet: "",
+    phone: "",
+    //exact direction
     province: "",
     township: "",
-    city: "",
-    address: "",
-    phone: "",
+    distribution: "",
+    principalStreet: "",
+    middleStreets: "",
+    buildingNumber: "",
     //stripe Info
     stripeProductName: "",
     stripeProductPrice: 0,
@@ -27,35 +30,37 @@ function SendingMoney() {
 
   const [selectedReceiver, setSelectedReceiver] = useState("")
   const [registeredReceivers, setRegisteredReceivers] = useState([])
-  const { clientData, setRouteToNavigate } = useContext(UserContext)
+  const [usableCurrency, setUsableCurrency] = useState([])
+  const { clientData, setRouteToNavigate, setActualStep } = useContext(UserContext)
 
   useEffect(()=>{
+    setActualStep(0)
     const accessToken = localStorage.getItem("accessToken")
+
     setRouteToNavigate("/shop/sendingMoney")
-    setSendingMoney( () => {
-      return {
-        ...sendingMoney,
-        email: clientData.email,
-        clientName: clientData.clientName,
-      }
-    })
+
+    setSendingMoney( () => ({...sendingMoney,
+      email: clientData.email,
+      clientName: clientData.clientName,
+      }))
+
     if( accessToken )
-    axios.post("https://api.milytravel.net/buys/getReceivers",clientData,
+    axios.post("http://localhost:3001/buys/getReceivers",clientData,
     {headers: {'Authorization': 'Bearer '+ accessToken}})
     .then(e => {
-      const user = e.data;
-      console.log(user)
-      const receiversData = user.receiver;
-      setSendingMoney( () => {
-        return {
+      const user = e.data.user;
+      const currency = e.data.currency;
+
+      setSendingMoney( () =>  ({
           ...sendingMoney,
           email: user.email,
-          clientName: user.clientName,
-        }
-      })
+          clientName: user.clientName}))
+
+      setUsableCurrency(currency)
       setRegisteredReceivers(user.receivers)
     })
-    .catch(e=> console.log(e))
+    .catch((e) => console.log(e))
+
   },[])
 
   return (
@@ -63,11 +68,13 @@ function SendingMoney() {
       <div
        className='shopContainer flex flex-column justify-center align-center'>
         <MultiStepForm
-          route={"https://api.milytravel.net/buys/sendingMoney"}
+          route={"http://localhost:3001/buys/sendingMoney"}
           DTO={sendingMoney}
           setDTO={setSendingMoney}
+          usableCurrency={usableCurrency}
         >
             <Step1 
+              usableCurrency={usableCurrency}
               registeredReceivers={registeredReceivers}
               DTO={sendingMoney}
               setDTO={setSendingMoney}

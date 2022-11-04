@@ -1,19 +1,37 @@
-import React,{useEffect} from 'react'
+import { useContext, useState, useEffect } from 'react'
 import BarInput from './BarInput'
-
+import UserContext from '../helpers/userContext';
+import axios from 'axios';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import ForwardButton from './ForwardButton';
 function Step1({
   DTO, 
   setDTO,
   registeredReceivers,
   selectedReceiver,
   setSelectedReceiver,
+  usableCurrency,
   children
 }) {
+
+  const {setActualStep} = useContext(UserContext);
+  const [minimumAmountOfMoney, setMinimumAmountOfMoney] = useState(0)
+  const [errorOfMin, setErrorOfMin] = useState(false)
+  const [exchangeRate, setExchangeRate] = useState(1)
+
+  const onSubmit= (event)=>{
+    event.preventDefault();
+    if(DTO.amount >= (+minimumAmountOfMoney * exchangeRate) ){
+      setActualStep(prevStep => prevStep + 1)
+    }
+    else{ 
+      setErrorOfMin(true)
+    }
+    
+  }
 
   const handleChange = (event) => {
     const selected = event.target.value
@@ -24,22 +42,38 @@ function Step1({
         setDTO({...DTO,
         receiverName: receiver.receiverName,
         carnet: receiver.carnet,
+        phone: receiver.phone,
+        //Exact Direction
         province: receiver.province,
         township: receiver.township,
-        city: receiver.city,
-        address: receiver.address,
-        phone: receiver.phone,
+        distribution: receiver.distribution,
+        principalStreet: receiver.principalStreet,
+        middleStreets: receiver.middleStreets,
+        buildingNumber: receiver.buildingNumber,
       })
       }
     })
     
   };
   const handleData = input => e =>{
-    setDTO({...DTO, [input]: e.target.value})
+    const selectedValue = e.target.value;
+
+    if(input === "paymentType"){
+      usableCurrency.map((currency, key) => {
+        if(selectedValue === currency.nameOfTheCurrency){
+          setMinimumAmountOfMoney(currency.minimumValueAllowed)
+          setExchangeRate(currency.exchangeRateValuePerDollar)
+          console.log(currency.exchangeRateValuePerDollar)
+        }
+        return 0
+      })
+    }
+
+    setDTO({...DTO, [input]: selectedValue})
 }
 
   return (
-    <div style={{width: "100%"}} className='flex flex-column justify-center'>
+    <form onSubmit={onSubmit} style={{width: "100%"}} className='flex flex-column justify-center'>
       <h4>Información de Cliente</h4>
       <BarInput 
       name={"clientName"}
@@ -58,21 +92,28 @@ function Step1({
       setObject={setDTO}
       sx={{width: "100%"}}
       />
-
-      <Select
-        label='Moneda a Entregar'
-        name={"paymentType"}
-        value={DTO.paymentType}
-        onChange={handleData("paymentType")}
-        color="primary"
-        required
-        sx={{width: "100%"}}
-      >
-
-           <MenuItem value={"Moneda Nacional"}>Moneda Nacional</MenuItem>
-           <MenuItem value={"MLC"}>MLC</MenuItem>
-           <MenuItem value={"Dolar Américano"}>Dólar Américano</MenuItem>
+      <FormControl variant="standard" fullWidth sx={{width: "100%"}}>
+        <InputLabel>Moneda a Entregar</InputLabel>
+        <Select
+          label='Moneda a Entregar'
+          name={"paymentType"}
+          value={DTO.paymentType}
+          onChange={handleData("paymentType")}
+          color="primary"
+          required
+          sx={{width: "100%"}}
+        >
+          {usableCurrency.map((currency, key)=>(
+            <MenuItem 
+              key={key}
+              value={currency.nameOfTheCurrency}
+            >
+            {currency.nameOfTheCurrency}
+            </MenuItem>
+          ))}
       </Select>
+      </FormControl>
+      {/**TODO: Hacer parte de conversion a USD */}
 
       <BarInput
       name={"amount"}
@@ -82,9 +123,21 @@ function Step1({
       setObject={setDTO}
       sx={{width: "100%"}}/>
 
+      {DTO.amount < (+minimumAmountOfMoney * exchangeRate) &&
+      <p style={{color: errorOfMin? "red" : "black" }}>
+        {console.log(DTO.amount <= (+minimumAmountOfMoney * exchangeRate), DTO.amount , +minimumAmountOfMoney * exchangeRate)}
+        El mínimo requerido es de {minimumAmountOfMoney} USD
+      </p>
+      }
+      {DTO.paymentType==="Moneda Nacional" && 
+      <p>Son {Math.round((DTO.amount / exchangeRate) * 100) / 100} USD Convertidos</p>
+      }
+
       {registeredReceivers.length !== 0 
       &&<FormControl variant="standard" fullWidth sx={{width: "100%"}}>
-        <InputLabel id="demo-simple-select-label">Seleccionar Destinatario</InputLabel>
+        <InputLabel id="demo-simple-select-label">
+          Seleccionar Destinatario
+        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -95,8 +148,11 @@ function Step1({
           {registeredReceivers.map((e, key)=> <MenuItem key={key} value={e.receiverName}>{e.receiverName}</MenuItem>)}
         </Select>
       </FormControl>}
-      {children}
-    </div>
+      <div className='flex justify-center'>
+        <ForwardButton
+        />
+      </div>
+    </form>
   )
 }
 

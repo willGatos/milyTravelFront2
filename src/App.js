@@ -31,18 +31,13 @@ function App() {
   const [selectedComboToBuy, setSelectedComboToBuy] = useState({})
   const [accessToken, setAccessToken] = useState("")
   const [newCombos, setNewCombos] = useState(combos)
-
+  const [actualStep, setActualStep] = useState(0)
   useEffect(()=>{
     const accessToken = localStorage.getItem("accessToken")
 
     if(accessToken)
-        axios.get("https://api.milytravel.net/user/fullUser",{
-            headers: {'Authorization': 'Bearer '+ accessToken}
-            }
-        ).then(e => {
-          console.log("Client Data",e.data)
-          setClientData(e.data)
-        })
+        axios.get("http://localhost:3001/user/fullUser",{headers: {'Authorization': 'Bearer '+ accessToken}})
+        .then(  e => setClientData(e.data))
         .catch( e => console.log(e) )
   },[])
 
@@ -52,7 +47,8 @@ function App() {
       clientData,         setClientData,
       routeToNavigate,    setRouteToNavigate,
       selectedComboToBuy, setSelectedComboToBuy,
-      newCombos,          setNewCombos
+      newCombos,          setNewCombos,
+      actualStep,         setActualStep,
     }}>
             <NavbarTop/>
             <Switch>

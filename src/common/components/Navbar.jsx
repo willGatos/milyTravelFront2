@@ -18,17 +18,16 @@ function NavbarTop({children}) {
   //TODO: determinar cual la forma de tomar el pathname
   return (
     <div>
-      <navbar className="navbar flex justify-space-between align-center">
+      <div className="navbar flex justify-space-between align-center">
           <img style={{width: "50px", marginLeft: "10px"}} src={MilyTravel} alt='MilyTravel'/>
           {accessToken
           ?
-          <div>
-            {userFirstName && 
-            <div className="text-center">
-              ¡ Hola {userFirstName} !
-            </div>}
-            
-            <div style={{fontSize: "18px", marginRight: "2vw"}} className="align-end navbarLinks flex justify-center">
+          <div style={{width: "100%"}}>
+            <div className=" text-center">
+            {userFirstName && <p className="text-animation">¡ Hola {userFirstName} !</p>}
+            </div>
+
+            <div style={{fontSize: "18px", marginRight: "2vw"}} className="align-end navbarLinks flex justify-end">
               <div className={route.pathname === "/" && "activeLink"}>
                 <Link to={"/"}>Inicio</Link>
               </div>
@@ -43,12 +42,13 @@ function NavbarTop({children}) {
           :
             <div
               style={{fontSize: "18px", marginRight: "2vw"}}
-              className="align-center navbarLinks flex justify-center">
-              <Link to={"/auth/login"}>Iniciar Sesión</Link>
-              <Link to={"/auth/register"}>Suscribirse</Link>
+              className="align-center navbarLinks flex justify-end"
+            >
+                <Link to={"/auth/login"}>Iniciar Sesión</Link>
+                <Link to={"/auth/register"}>Suscribirse</Link>
             </div>
           }
-      </navbar>
+      </div>
       {children}
     </div>
   )

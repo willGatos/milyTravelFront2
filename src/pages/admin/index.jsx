@@ -7,9 +7,10 @@ import Cards from "../../common/components/Cards";
 import * as React from 'react';
 import Compressor from 'compressorjs';
 import AdminDialog from "../../common/components/AdminDialog";
-
+import ExchangeRate from "./ExchangeRate";
 function Admin() {
-    const [allCombos, setAllCombos] = useState(combos)
+    const { newCombos, setNewCombos } = useContext(UserContext)
+    const [allCombos, setAllCombos] = useState(newCombos)
     const [selectedCombo, setSelectedCombo] = useState({})
 
     const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
@@ -18,13 +19,14 @@ function Admin() {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const { newCombos, setNewCombos } = useContext(UserContext)
+    //TODO:Ver como hacer para que los nuevos combos no sean 
+    //     los de los Users, sino, los del Admin
     const [updateValues, setUpdateValues] =  useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
     const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
 
     const Router = useHistory()
 
-    const handleDataForUpdate = input => e =>{
+    const handleDataForUpdate = input => e => {
         setUpdateValues({...updateValues, [input]: e.target.value})
       }
 
@@ -32,7 +34,7 @@ function Admin() {
         setUpdateValues({...updateValues, isAvailable : event.target.checked});
       };
 
-    const handleDataForCreating = input => e =>{
+    const handleDataForCreating = input => e => {
       setToCreateCombo({...toCreateCombo, [input]: e.target.value})
       }
 
@@ -40,7 +42,7 @@ function Admin() {
       setToCreateCombo({...toCreateCombo, isAvailable : event.target.checked});
       };
 
-      const handlePrincipalImageChangeToUpdate = (e)=>{
+      const handlePrincipalImageChangeToUpdate = (e) => {
         const file = e.target.files[0];
 
         setIsLoading(true)
@@ -72,7 +74,8 @@ function Admin() {
             },
           })
       }
-      const handlePrincipalImageChangeToCreate = (e)=>{
+
+    const handlePrincipalImageChangeToCreate = (e)=>{
     const file = e.target.files[0];
 
     setIsLoading(true)
@@ -108,7 +111,7 @@ function Admin() {
       const createCombo = (event) =>{
         const accessToken = localStorage.getItem("accessToken");
         event.preventDefault()
-        axios.post("https://api.milytravel.net/buys/createCombo",toCreateCombo,{
+        axios.post("http://localhost:3001/buys/createCombo",toCreateCombo,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -123,7 +126,7 @@ function Admin() {
         
       }
 
-      const updateData = (event)=>{
+      const updateData = (event) => {
         event.preventDefault()
         const accessToken = localStorage.getItem("accessToken");
         const toUpdateObject = {
@@ -131,7 +134,7 @@ function Admin() {
           updateDTO: updateValues,
         }
         
-        axios.post("https://api.milytravel.net/buys/combosUpdate", toUpdateObject,{
+        axios.post("http://localhost:3001/buys/combosUpdate", toUpdateObject,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -152,13 +155,11 @@ function Admin() {
           //TODO: Cartel de Operacion Exitosa
         })
         .catch(res => console.log("TODO: Operacion Fallida"))
-       
-
       }
 
       const deleteCombo = (_id) => {
         const accessToken = localStorage.getItem("accessToken")
-        axios.delete(`https://api.milytravel.net/buys/CombosDelete/${_id}`,{
+        axios.delete(`http://localhost:3001/buys/CombosDelete/${_id}`,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then(e => {
@@ -169,7 +170,7 @@ function Admin() {
 
       useEffect(()=>{
         const accessToken = localStorage.getItem("accessToken")
-        axios.get("https://api.milytravel.net/buys/getComboToAdmin",{
+        axios.get("http://localhost:3001/buys/getComboToAdmin",{
           headers: {'Authorization': 'Bearer '+ accessToken}
           } )
         .then((response)=> {
@@ -183,7 +184,7 @@ function Admin() {
         const accessToken = localStorage.getItem("accessToken")
 
         if(!accessToken) Router.push("/")
-            axios.get("https://api.milytravel.net/user/fullUser",{
+            axios.get("http://localhost:3001/user/fullUser",{
                 headers: {'Authorization': 'Bearer '+ accessToken}
                 }
             ).then(e => {
@@ -195,16 +196,21 @@ function Admin() {
       },[])
 
   return (
-    <>
-    <div className="flex justify-center" style={{paddingTop: "65px"}}>
-      <button className="createButton" onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
-    </div>
+    <div style={{paddingTop: "65px"}}>
+      <div>
+        <ExchangeRate/>
+      </div>
+      <div className="flex justify-center">
+        <button className="createButton" onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
+      </div>
     <div
-     style={{flexWrap: "wrap", gap: "30px", paddingTop: "35px"}}
+     style={{ flexWrap: "wrap",
+      gap: "30px",
+      paddingTop: "35px"}}
      className="flex justify-center">
         {allCombos.map((singleCombo, key)=>
             <Cards
-            key={key}
+              key={key}
               _id={singleCombo._id}
               comboName={singleCombo.name}
               imageUrl={singleCombo.image}
@@ -240,7 +246,7 @@ function Admin() {
           updateValues={toCreateCombo}
         />
     </div>
-    </>
+    </div>
   )
 }
 

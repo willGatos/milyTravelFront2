@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import ForwardButton from './ForwardButton';
 function BuyingStep1({
   DTO, 
   setDTO,
@@ -38,9 +38,15 @@ function BuyingStep1({
     })
     
   };
+  const {setActualStep} = useContext(UserContext);
+
+  const onSubmit= (event)=>{
+    event.preventDefault();
+    setActualStep(prevStep => prevStep + 1)
+  }
 
   return (
-    <div style={{width: "100%"}} className='flex flex-column justify-center'>
+    <form onSubmit={onSubmit} style={{width: "100%"}} className='flex flex-column justify-center'>
         <h4>Información de Cliente</h4>
           <BarInput 
             name={"clientName"}
@@ -80,7 +86,10 @@ function BuyingStep1({
           {registeredReceivers.map((e, key)=> <MenuItem key={key} value={e.receiverName}>{e.receiverName}</MenuItem>)}
         </Select>
       </FormControl>}
-        </div>
+      <div className='flex justify-center'>
+        <ForwardButton/>
+      </div>
+        </form>
   )
 }
 

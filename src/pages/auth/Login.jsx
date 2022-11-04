@@ -22,7 +22,7 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault()
     const toSendLoginObject = {email: loginObject.email, password: loginObject.password}
-    axios.post("https://api.milytravel.net/user/signin", toSendLoginObject)
+    axios.post("http://localhost:3001/user/signin", toSendLoginObject)
     .then((response)=> {
       console.log("Response Data from Server ",response.data)
       const {accessToken, clientData} = response.data;

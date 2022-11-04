@@ -46,10 +46,10 @@ function BuyingCombos() {
     })
 
     if( accessToken )
-    axios.post("https://api.milytravel.net/buys/getReceivers",clientData,
+    axios.post("http://localhost:3001/buys/getReceivers",clientData,
     {headers: {'Authorization': 'Bearer '+ accessToken}})
     .then(e => {
-      const user = e.data;
+      const user = e.data.user;
       console.log(user)
       const receiversData = user.receivers;
       setBuyingCombos( () => {
@@ -68,7 +68,7 @@ function BuyingCombos() {
     <>
       <div className='shopContainer flex flex-column justify-center align-center'>
         <MultiStepForm
-          route={"https://api.milytravel.net/buys/sendCombo"}
+          route={"http://localhost:3001/buys/sendCombo"}
           DTO={buyingCombos}
           setDTO={setBuyingCombos}
         >
