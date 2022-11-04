@@ -108,7 +108,7 @@ function Step2({DTO, setDTO}) {
             sx={{width: "100%"}}
             name={"buildingNumber"}
             type={"number"}
-            label={"Num. de Edificio"}
+            label={"Edificio"}
             value={DTO.buildingNumber}
             onChange={handleData("buildingNumber")}
             variant="standard"

@@ -38,6 +38,9 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
         lineHeight: 1,
         textAlign: 'center',
         width: 30,
+        position: "absolute",
+        zIndex: "5",
+        right: "0"
       },
       children: <span><img src={ArrowRight} alt={`>`}/></span>,
     }}
@@ -55,6 +58,9 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
         lineHeight: 1,
         textAlign: 'center',
         width: 30,
+        position: "absolute",
+        zIndex: "5",
+        left: "0"
       },
       children: <span><img src={ArrowLeft} alt="<"/></span>,
     }}

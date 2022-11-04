@@ -42,7 +42,7 @@ function ExchangeRate() {
                 Añadir Moneda Aceptada
             </button>
         </div>
-        <div className="flex justify-space-evenly">
+        <div style={{gap: "15px"}} className="flex justify-space-evenly flex-wrap">
         {actualCurrencies.map( (currency, key) => (
             <div onClick={()=>{
                     console.log(currency);

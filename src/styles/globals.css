@@ -10,6 +10,11 @@ body {
   font-family: 'Nunito', sans-serif;
   border: 0;
 }
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+
 
 a {
   color: #0a74a7;
@@ -41,6 +46,14 @@ iframe{
   padding: 10px 25px;
   border-radius: 15px;
   overflow-y: auto;
+}
+.buttonNavbar{
+  background: #af353d;
+  width: 100px;
+  border-radius: 15px;
+  color: white;
+  margin-left: 10px;
+  padding: 5px;
 }
 .MilyLogo{
   width: 100px;

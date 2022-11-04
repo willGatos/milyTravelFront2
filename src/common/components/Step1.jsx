@@ -117,7 +117,7 @@ function Step1({
 
       <BarInput
       name={"amount"}
-      label={"Cantidad"}
+      label={"Cantidad a Enviar"}
       value={DTO.amount}
       object={DTO}
       setObject={setDTO}

@@ -19,8 +19,7 @@ function Register() {
 
   const setApiCall = useCheckToken();
   const Router = useHistory();
-
-  const {selectedComboToBuy, setClientData} = useContext(UserContext);
+  const {setClientData, setAccessToken, routeToNavigate} = useContext(UserContext)
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -31,7 +30,11 @@ function Register() {
     }
     setApiCall("post", "https://api.milytravel.net/user/signup", toSendRegisterObject)
     .then( response => {
-      Router.push("verification")})
+
+      const {accessToken, clientData} = response.data;
+      signHandler(accessToken, clientData, setClientData, setAccessToken);
+
+      Router.push(routeToNavigate)})
     .catch(()=>console.log("Error De Nuevo"))
     
   }
