@@ -69,7 +69,7 @@ function Step2({DTO,setDTO, usableCurrency}) {
                       required 
                       variant='standard'
                     />
-            )
+                  )
           }
         }
       })}
