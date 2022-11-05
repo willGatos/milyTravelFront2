@@ -19,13 +19,11 @@ function MultiStepForm({
           case 0:
             return (children);
           case 1:
-            return <Step2    DTO={DTO}    setDTO={setDTO} />;
+            return <Step2 DTO={DTO} setDTO={setDTO} usableCurrency={usableCurrency}/>;
           case 2:
-            return <Step3    DTO={DTO}    setDTO={setDTO} />;
+            return <Step3 DTO={DTO} setDTO={setDTO} />;
           case 3:
-            return <LastStep usableCurrency={usableCurrency}
-                             DTO={DTO}
-                             setDTO={setDTO} />;
+            return <LastStep DTO={DTO} setDTO={setDTO} usableCurrency={usableCurrency}/>;
           default:
             return <div> <p>Error en los Pasos a seguir</p> </div>
       }

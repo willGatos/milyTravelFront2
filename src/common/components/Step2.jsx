@@ -3,8 +3,8 @@ import ForwardButton from './ForwardButton'
 import BackButton from './BackButton'
 import { useState, useContext } from 'react'
 import UserContext from '../helpers/userContext'
-
-function Step2({DTO,setDTO}) {
+import { TextField } from '@mui/material'
+function Step2({DTO,setDTO, usableCurrency}) {
 
   const handleData = input => e =>{
     setDTO({...DTO, [input]: e.target.value})
@@ -56,6 +56,23 @@ function Step2({DTO,setDTO}) {
         value={DTO.phone}
         sx={{width: "100%"}}
       />
+
+      {usableCurrency.map((currency)=>{
+        if(currency.nameOfTheCurrency === DTO.paymentType){
+          if(currency.requiresTargetForTransaction){
+            return(
+                    <TextField
+                      name={"receiverCard"}
+                      label={"Tarjeta del Destinatario"}
+                      value={DTO.receiverCard}
+                      onChange={handleData("receiverCard")}
+                      required 
+                      variant='standard'
+                    />
+            )
+          }
+        }
+      })}
 
     <div className='flex justify-center'>
 

@@ -31,6 +31,9 @@ iframe{
 .text-animation{
   animation: text-show-up forwards 2s;
 }
+.text-end{
+  text-align: end;
+}
 
 @keyframes text-show-up {
   0%{
@@ -240,7 +243,7 @@ button{
   width: 1px;
 }
 .navbar{
-  height: 45px;
+  height: 65px;
   background: #ffffffa6;
   position: fixed;
   width: 100vw;
@@ -282,6 +285,9 @@ button{
   height: 90px;
   width: auto;
 }
+.navbarButtons {
+  margin-right: 40px;
+}
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
@@ -302,6 +308,9 @@ button{
     align-items: center;
     width: 100%;
     justify-content: center;
+  }
+  .navbarButtons {
+    margin-right: 20px;
   }
   .main {
     background-position: -330px 0px;
