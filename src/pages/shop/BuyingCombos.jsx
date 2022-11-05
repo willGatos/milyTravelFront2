@@ -16,6 +16,7 @@ function BuyingCombos() {
     combo: selectedComboToBuy.name,
     price: selectedComboToBuy.price,
     creditCard: "",
+    receiverCard: "",
     //DEL DESTINATARIO
     receiverName: "",
     carnet: "",
@@ -31,7 +32,6 @@ function BuyingCombos() {
 
   const [selectedReceiver, setSelectedReceiver] = useState("")
   const [registeredReceivers, setRegisteredReceivers] = useState([])
-  
 
   useEffect(()=>{
 
@@ -50,6 +50,8 @@ function BuyingCombos() {
     {headers: {'Authorization': 'Bearer '+ accessToken}})
     .then(e => {
       const user = e.data.user;
+      //const currency = e.data.currency;
+
       console.log(user)
       const receiversData = user.receivers;
       setBuyingCombos( () => {

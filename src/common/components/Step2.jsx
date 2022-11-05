@@ -56,8 +56,8 @@ function Step2({DTO,setDTO, usableCurrency}) {
         value={DTO.phone}
         sx={{width: "100%"}}
       />
-
-      {usableCurrency.map((currency)=>{
+      {DTO.amount && 
+      usableCurrency.map((currency)=>{
         if(currency.nameOfTheCurrency === DTO.paymentType){
           if(currency.requiresTargetForTransaction){
             return(
@@ -72,7 +72,9 @@ function Step2({DTO,setDTO, usableCurrency}) {
                   )
           }
         }
-      })}
+      })
+      }
+      
 
     <div className='flex justify-center'>
 
