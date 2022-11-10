@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import UserContext from '../helpers/userContext';
-
+import axios from 'axios';
 function SubmitButton({DTO, usableCurrency}) {
     const {newCombos} = useContext(UserContext);
     let items  = [];
@@ -49,17 +49,14 @@ function SubmitButton({DTO, usableCurrency}) {
         })
         console.log(items)
         const accessToken = localStorage.getItem("accessToken")
-        fetch("/buys/create-checkout-session", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          'Authorization': 'Bearer '+ accessToken
-         },
-        body: JSON.stringify({
+        axios.post("/buys/create-checkout-session",
+        {
           emailRequest: DTO,
           items,
-        }),
-        })
+        }, {
+        headers: { 
+          'Authorization': 'Bearer '+ accessToken
+         }})
         .then(res => {
         if (res.ok) return res.json()
         return res.json().then(json => Promise.reject(json))

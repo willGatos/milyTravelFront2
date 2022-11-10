@@ -1,6 +1,4 @@
-https://api.milytravel.net
 
-TODO: Esilizar el Search BAr
 TODO: Recordar poner en el CreateCombo un array con los contains
 
 TODO: Hacer animacones de Inicio
