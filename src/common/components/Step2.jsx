@@ -4,6 +4,7 @@ import BackButton from './BackButton'
 import { useState, useContext } from 'react'
 import UserContext from '../helpers/userContext'
 import { TextField } from '@mui/material'
+
 function Step2({DTO,setDTO, usableCurrency}) {
 
   const handleData = input => e =>{

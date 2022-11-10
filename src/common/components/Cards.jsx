@@ -2,38 +2,39 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import deleteData from '../helpers/CRUD/deleteData';
 
 export default function Cards({
-  _id,
-  comboName, 
-  imageUrl, 
-  price, 
-  isAvailable, 
   setOpenDialog,
-  deleteCombo,
   setSelectedCombo,
   setUpdateValues,
-  singleCombo
+  singleCombo,
+  allCombos,
+  setAllCombos,
 }) {
+  const {_id,
+    name, 
+    image, 
+    price, 
+    isAvailable,} = singleCombo;
   return (
     <Card onClick={()=>{
       setUpdateValues(singleCombo)
       setSelectedCombo(singleCombo)
       }} sx={{ maxWidth: 345, border: `1px solid ${isAvailable ? "#8f6" : "red"}` }}>
       <LazyLoadImage
-        alt={comboName}
+        alt={name}
         width={"345"}
         height="300"
-        src={imageUrl} />
+        src={image} />
 
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {comboName}
+          {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Precio: {price} <br/>
@@ -52,7 +53,12 @@ export default function Cards({
 
         <button 
           onClick={()=>{
-            deleteCombo(_id)
+            deleteData(
+              _id,
+              "/buys/CombosDelete/",
+              setAllCombos,
+              allCombos,
+              )
           }}
           size="small" style={{
             background: "#d21e1e",

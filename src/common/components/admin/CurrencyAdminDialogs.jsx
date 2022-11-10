@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import CurrencyDialog from '../CurrencyDialog'
-import axios from 'axios'
+import updateData from '../../helpers/CRUD/updateData'
+import createCombo from '../../helpers/CRUD/createData'
 
 function CurrencyAdminDialogs({
   allCurrency,
@@ -30,74 +31,45 @@ function CurrencyAdminDialogs({
     const handleDataForUpdate = input => e =>{
         setUpdateCurrencyToDeliever({...updateCurrencyToDeliever, [input]: e.target.value})
     }
+
     const handleDataForCreating = input => e =>{
         setCreateCurrencyToDeliever({...createCurrencyToDeliever, [input]: e.target.value})
     }
 
-    const createCombo = (event) =>{
-        const accessToken = localStorage.getItem("accessToken");
-        event.preventDefault()
-        axios.post("https://api.milytravel.net/currency/create",createCurrencyToDeliever,{
-        headers: {'Authorization': 'Bearer '+ accessToken}
-        })
-        .then((e)=>{
-          setAllCurrency([e.data, ...allCurrency])
-          //TODO: Cartel de Operacion Exitosa
-          setCreateOpenDialog(false)
-          setCreateIsLoading(false)
-        })
-        .catch(res => {
-          setCreateOpenDialog(false)
-          setCreateIsLoading(false)
-          console.log("TODO: Operacion Fallida")
-        })
-      }
+      const createFunction = () => createCombo(
+        "/currency/create",
+        createCurrencyToDeliever,
+        setAllCurrency,
+        setCreateOpenDialog,
+        allCurrency,
+        setCreateIsLoading,
+      )
 
-      const updateData = (event) => {
-        event.preventDefault()
-        const accessToken = localStorage.getItem("accessToken");
-        const toUpdateObject = {
-          CurrencyId: selectedCurrency._id,
-          updateCurrencyDTO: updateCurrencyToDeliever,
-        }
-        console.log("toUpdateObject",toUpdateObject);
-        
-        axios.patch("https://api.milytravel.net/currency/update", toUpdateObject,{
-        headers: {'Authorization': 'Bearer '+ accessToken}
-        })
-        .then((e)=>{
-          setAllCurrency((prevAllCombos) => {
-            const value =  prevAllCombos.map(e => {
-                console.log(e._id === selectedCurrency._id)
-                if(e._id === selectedCurrency._id) return updateCurrencyToDeliever;
-                return e;
-            })
-
-            return value;
-        })
-        setUpdateOpenDialog(false)
-        setUpdateIsLoading (false)
-          //TODO: Cartel de Operacion Exitosa
-        })
-        .catch(res => console.log("TODO: Operacion Fallida"))
-      }
+      const update = () => updateData(
+        "/currency/update",
+        selectedCurrency, 
+        updateCurrencyToDeliever,
+        setAllCurrency,
+        setUpdateOpenDialog,
+        setUpdateIsLoading,
+      )
 
   return (
     <div>
         <CurrencyDialog
             openDialog={updateOpenDialog} 
             setOpenDialog={setUpdateOpenDialog}
-            callToActionFunction={updateData}
             updateValues={updateCurrencyToDeliever}
             isLoading={updateIsLoading}
+            callToActionFunction={update}
             handleData={handleDataForUpdate}
         />
         <CurrencyDialog
             openDialog={createOpenDialog} 
             setOpenDialog={setCreateOpenDialog}
-            callToActionFunction={createCombo}
             updateValues={createCurrencyToDeliever}
             isLoading={createIsLoading}
+            callToActionFunction={createFunction}
             handleData={handleDataForCreating}
         />
     </div>

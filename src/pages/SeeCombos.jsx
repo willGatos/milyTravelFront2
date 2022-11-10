@@ -1,5 +1,4 @@
 import {useState, useEffect, useContext} from 'react';
-import combos from "../common/helpers/combosRelationship"
 import {motion, AnimatePresence} from "framer-motion"
 import Dialog from "@mui/material/Dialog"
 import UserContext from '../common/helpers/userContext';
@@ -18,10 +17,10 @@ function SeeCombos() {
   const [openDialog, setOpenDialog] = useState(false)
 
   useEffect(()=>{
-    axios.get("https://api.milytravel.net/buys/getComboToUsers")
+    axios.get("/buys/getComboToUsers")
     .then((response)=> {
       const visibleCombos = response.data
-      console.log("vis",visibleCombos)
+      console.log("vis ",visibleCombos)
       setNewCombos(visibleCombos)
     })
   },[])
@@ -29,9 +28,8 @@ function SeeCombos() {
   const Router = useHistory()
 
   useEffect(()=>{
-    console.log("Combos",combos)
+
     setArrayFiltered(() => newCombos.filter(combo => {
-      console.log(combo.contains.includes(actualFilter))
       if(actualFilter) return  combo.contains.includes(actualFilter)
       else return true
     }))

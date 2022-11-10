@@ -1,14 +1,22 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { Dialog, TextField } from '@mui/material';
+import updateData from '../helpers/CRUD/updateData';
+import createCombo from '../helpers/CRUD/createData';
 
 function CurrencyDialog({
     openDialog, 
-    setOpenDialog, 
-    callToActionFunction, 
+    setOpenDialog,  
     updateValues,
     isLoading,
+    callToActionFunction,
     handleData,
 }) {
+
+  useEffect(()=>{
+    console.log("hola",callToActionFunction)
+  },[])
+
+   
   return (
     <div>
         <Dialog 

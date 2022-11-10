@@ -20,7 +20,7 @@ const [emailIsSend, setEmailIsSend] = useState(false)
     const onSubmit = (event) =>{
         event.preventDefault()
         if(formValues.verificationCode){
-        axios.post("https://api.milytravel.net/user/verification", formValues)
+        axios.post("/user/verification", formValues)
         .then((response)=> {
         const {accessToken, clientData} = response.data;
         signHandler(accessToken, clientData, setClientData, setAccessToken);
@@ -30,7 +30,7 @@ const [emailIsSend, setEmailIsSend] = useState(false)
         }
 
         else {
-          axios.post("https://api.milytravel.net/user/resendEmail", formValues)
+          axios.post("/user/resendEmail", formValues)
           .then(()=>setEmailIsSend(true))
           .catch((e)=>{
             console.log(e)

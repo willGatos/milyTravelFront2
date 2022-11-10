@@ -17,7 +17,7 @@ function SendEmailToRecoverPass() {
     event.preventDefault();
     setStateOfEmail("Loading")
 
-    axios.post("https://api.milytravel.net/user/sendEmailToChangePassword", { email })
+    axios.post("/user/sendEmailToChangePassword", { email })
     .then((response)=>{
       if(response.data) setStateOfEmail("success")
       else setStateOfEmail("fail")

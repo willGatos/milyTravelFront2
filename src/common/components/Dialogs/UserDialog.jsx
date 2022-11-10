@@ -1,67 +1,62 @@
-import React from 'react'
+import {useEffect} from 'react'
 import { Dialog, TextField } from '@mui/material'
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-function AdminDialog({
-    openDialog, 
-    setOpenDialog, 
-    callToActionFunction, 
-    updateValues, 
-    handlePrincipalImageChange,
+function UserDialog({
+    openDialog,
+    setOpenDialog,
+    callToActionFunction,
+    updateValues,
     isLoading,
     handleData,
     handleChange
 }) {
-
+  const onSubmit= (e) => {
+    e.preventDefault()
+    callToActionFunction()
+  }
   return (
     <div>
         <Dialog 
             open={openDialog}
             onClose={()=>setOpenDialog(false)}>
-        <form onSubmit={callToActionFunction}
+        <form onSubmit={onSubmit}
             style={{padding: "80px", gap: "10px"}}
             className='flex justify-center align-center flex-column'>
-          <img 
-            style={{width: "90%",height: "94%"}} 
-            src={updateValues.image} 
-            alt=""
-          />
-          <input 
-            type="file" 
-            onChange={handlePrincipalImageChange} 
-            accept="image/*"
-          />
         {isLoading && 
         <div style={{margin: "auto", overflow: "hidden"}} className="spinner-container">
             <div className="loading-spinner"></div>
         </div>}
             <TextField
-              name={"name"}
+              name={"clientName"}
               sx={{width:"100%"}}
-              value={updateValues.name}
+              value={updateValues.clientName}
               label={"Nombre"}
-              onChange={handleData("name")}
+              onChange={handleData("clientName")}
               required
               variant="standard"
             />
 
             <TextField
-              name={"price"}
+              name={"email"}
               sx={{width:"100%"}}
-              value={updateValues.price}
+              value={updateValues.email}
               label={"Precio"}
-              onChange={handleData("price")}
+              onChange={handleData("email")}
               required
               variant="standard"
             />
 
             <FormGroup>
-                <FormControlLabel control={<Switch 
-                checked={updateValues.isAvailable}
-                onChange={handleChange}
-                defaultChecked />} label="Disponibilidad" />
+                <FormControlLabel 
+                control={
+                <Switch
+                checked={updateValues.isAuth}
+                onChange={handleChange} />
+                }
+                label="Autenticación" />
             </FormGroup>
 
             <div className="flex justify-center">
@@ -92,4 +87,4 @@ function AdminDialog({
   )
 }
 
-export default AdminDialog
+export default UserDialog

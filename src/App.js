@@ -39,7 +39,11 @@ function App() {
     const accessToken = localStorage.getItem("accessToken")
 
     if(accessToken)
-        axios.get("https://api.milytravel.net/user/fullUser",{headers: {'Authorization': 'Bearer '+ accessToken}})
+        axios.get("/user/fullUser",
+        {
+          headers: {'Authorization': 'Bearer '+ accessToken}
+        }
+        )
         .then(  e => setClientData(e.data))
         .catch( e => console.log(e) )
   },[])

@@ -1,132 +1,32 @@
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../../common/helpers/userContext";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import combos from "../../common/helpers/combosRelationship";
-import Cards from "../../common/components/Cards";
-import * as React from 'react';
-import Compressor from 'compressorjs';
-import AdminDialog from "../../common/components/AdminDialog";
-import ExchangeRate from "./ExchangeRate";
+import CurrencySection from "./CurrencySection";
+import ComboSection from "./ComboSection";
+import UsersSection from "./UsersSection";
+
+import { useState } from "react";
+
 function Admin() {
-    const { newCombos, setNewCombos } = useContext(UserContext)
-    const [allCombos, setAllCombos] = useState(newCombos)
-    const [selectedCombo, setSelectedCombo] = useState({})
+  const [adminWindow, setAdminWindow] = useState(0)
 
-    const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
-    const [openCreateDialog, setOpenCreateDialog] = useState(false)
+  const handleWindowChange = () =>{
+    switch(adminWindow){
+      case 0:
+        return <ComboSection />;
 
-    const [isLoading, setIsLoading] = useState(false)
+      case 1:
+        return <CurrencySection />;
 
+      case 2:
+        return <UsersSection />;
 
-    //TODO:Ver como hacer para que los nuevos combos no sean 
-    //     los de los Users, sino, los del Admin
-    const [updateValues, setUpdateValues] =  useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
-    const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
+      default:
+        return <div>
+                <p>Error en los Pasos a seguir</p>
+               </div>
+           }
+    }
 
-    const Router = useHistory()
-
-    const handleDataForUpdate = input => e => {
-        setUpdateValues({...updateValues, [input]: e.target.value})
-      }
-
-    const handleChangeForUpdate = (event) => {
-        setUpdateValues({...updateValues, isAvailable : event.target.checked});
-      };
-
-    const handleDataForCreating = input => e => {
-      setToCreateCombo({...toCreateCombo, [input]: e.target.value})
-      }
-
-    const handleChangeForCreating = (event) => {
-      setToCreateCombo({...toCreateCombo, isAvailable : event.target.checked});
-      };
-
-      const handlePrincipalImageChangeToUpdate = (e) => {
-        const file = e.target.files[0];
-
-        setIsLoading(true)
-
-        new Compressor(file, {
-            quality: 0.9,
-
-            success(result) {
-              console.log(isLoading)
-              const formData = new FormData();
-              formData.append("file", result)
-              formData.append("upload_preset", `zfvhwnfp`)
-              axios.post("https://api.cloudinary.com/v1_1/milytravel/image/upload",formData)
-              .then(e =>{
-                const url = e.data.secure_url;
-                setUpdateValues( { ...selectedCombo, image: url } );
-                setIsLoading(false)
-                return url;
-            })
-      
-            .catch( e => {
-                
-              setIsLoading(false)
-              console.log(e)
-            })},
-            error(err) {
-              setIsLoading(false)
-              console.log("error2",err);
-            },
-          })
-      }
-
-    const handlePrincipalImageChangeToCreate = (e)=>{
-    const file = e.target.files[0];
-
-    setIsLoading(true)
-
-    new Compressor(file, {
-        quality: 0.9,
-
-        success(result) {
-          console.log(isLoading)
-          const formData = new FormData();
-          formData.append("file", result)
-          formData.append("upload_preset", `zfvhwnfp`)
-          axios.post("https://api.cloudinary.com/v1_1/milytravel/image/upload",formData)
-          .then(e =>{
-            const url = e.data.secure_url;
-            setToCreateCombo( { ...toCreateCombo, image: url } );
-            setIsLoading(false)
-            return url;
-        })
-  
-        .catch( e => {
-            
-          setIsLoading(false)
-          console.log(e)
-        })},
-        error(err) {
-          setIsLoading(false)
-          console.log("error2",err);
-        },
-      })
-      }
-
-      const createCombo = (event) =>{
-        const accessToken = localStorage.getItem("accessToken");
-        event.preventDefault()
-        axios.post("https://api.milytravel.net/buys/createCombo",toCreateCombo,{
-        headers: {'Authorization': 'Bearer '+ accessToken}
-        })
-        .then((e)=>{
-          setAllCombos([e.data, ...allCombos])
-          //TODO: Cartel de Operacion Exitosa
-          setOpenCreateDialog(false)
-        })
-        .catch(res => {
-          setOpenCreateDialog(false)
-          console.log("TODO: Operacion Fallida")
-        })
-        
-      }
-
-      const updateData = (event) => {
+    const handleButtonOptions = (page) => setAdminWindow(page)
+      /* const updateData = (event) => {
         event.preventDefault()
         const accessToken = localStorage.getItem("accessToken");
         const toUpdateObject = {
@@ -134,7 +34,7 @@ function Admin() {
           updateDTO: updateValues,
         }
         
-        axios.post("https://api.milytravel.net/buys/combosUpdate", toUpdateObject,{
+        axios.post(route, toUpdateObject,{
         headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .then((e)=>{
@@ -155,97 +55,16 @@ function Admin() {
           //TODO: Cartel de Operacion Exitosa
         })
         .catch(res => console.log("TODO: Operacion Fallida"))
-      }
-
-      const deleteCombo = (_id) => {
-        const accessToken = localStorage.getItem("accessToken")
-        axios.delete(`https://api.milytravel.net/buys/CombosDelete/${_id}`,{
-          headers: {'Authorization': 'Bearer '+ accessToken}
-        })
-        .then(e => {
-          setAllCombos(allCombos.filter(e => e._id !== _id));
-        })
-        .catch(e => console.log(e) )
-      }
-
-      useEffect(()=>{
-        const accessToken = localStorage.getItem("accessToken")
-        axios.get("https://api.milytravel.net/buys/getComboToAdmin",{
-          headers: {'Authorization': 'Bearer '+ accessToken}
-          } )
-        .then((response)=> {
-          const visibleCombos = response.data
-          console.log("vis" , visibleCombos)
-          setAllCombos(visibleCombos)
-        })
-      },[])
-
-      useEffect(()=>{
-        const accessToken = localStorage.getItem("accessToken")
-
-        if(!accessToken) Router.push("/")
-            axios.get("https://api.milytravel.net/user/fullUser",{
-                headers: {'Authorization': 'Bearer '+ accessToken}
-                }
-            ).then(e => {
-                if(!e.data.isAdmin) Router.push("/")
-                console.log("isAdmin ",e.data.isAdmin)
-                }
-            )
-            .catch( e => console.log(e) )
-      },[])
+      } */
 
   return (
     <div style={{paddingTop: "65px"}}>
-      <div>
-        <ExchangeRate/>
+      <div className="flex justify-space-evenly">
+        <button className="navigationButton" onClick={()=> handleButtonOptions(0)}>Combos</button>
+        <button className="navigationButton" onClick={()=> handleButtonOptions(1)}>Dinero</button>
+        <button className="navigationButton" onClick={()=> handleButtonOptions(2)}>Usuarios</button>
       </div>
-      <div className="flex justify-center">
-        <button className="createButton" onClick={()=> setOpenCreateDialog(true)} >Crear Combo</button>
-      </div>
-    <div
-     style={{ flexWrap: "wrap",
-      gap: "30px",
-      paddingTop: "35px"}}
-     className="flex justify-center">
-        {allCombos.map((singleCombo, key)=>
-            <Cards
-              key={key}
-              _id={singleCombo._id}
-              comboName={singleCombo.name}
-              imageUrl={singleCombo.image}
-              price={singleCombo.price}
-              isAvailable={singleCombo.isAvailable}
-              setOpenDialog={setOpenUpdateDialog}
-              deleteCombo={deleteCombo}
-              setSelectedCombo={setSelectedCombo}
-              setUpdateValues={setUpdateValues}
-              singleCombo={singleCombo}
-            />
-            )}
-
-        <AdminDialog
-          handleData={handleDataForUpdate}
-          handleChange={handleChangeForUpdate}
-          handlePrincipalImageChange={handlePrincipalImageChangeToUpdate}
-          isLoading={isLoading}
-          openDialog={openUpdateDialog}
-          setOpenDialog={setOpenUpdateDialog}
-          callToActionFunction={updateData}
-          updateValues={updateValues}
-        />
-
-        <AdminDialog
-          handleData={handleDataForCreating}
-          handleChange={handleChangeForCreating}
-          handlePrincipalImageChange={handlePrincipalImageChangeToCreate}
-          isLoading={isLoading}
-          openDialog={openCreateDialog}
-          setOpenDialog={setOpenCreateDialog}
-          callToActionFunction={createCombo}
-          updateValues={toCreateCombo}
-        />
-    </div>
+      {handleWindowChange()}
     </div>
   )
 }

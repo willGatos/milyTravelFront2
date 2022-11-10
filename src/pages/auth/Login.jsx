@@ -21,13 +21,14 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    const toSendLoginObject = {email: loginObject.email, password: loginObject.password}
-    axios.post("https://api.milytravel.net/user/signin", toSendLoginObject)
+    const toSendLoginObject = {
+      email: loginObject.email,
+      password: loginObject.password,
+    }//
+    axios.post("/user/signin", toSendLoginObject)
     .then((response)=> {
-      console.log("Response Data from Server ",response.data)
       const {accessToken, clientData} = response.data;
       signHandler(accessToken, clientData, setClientData, setAccessToken)
-      console.log(selectedComboToBuy)
       Router.push(routeToNavigate);
     })
     .catch((e) => console.log("Error De Nuevo", e))
@@ -36,10 +37,6 @@ function Login() {
   const handleData = input => e =>{
     setLoginObject({...loginObject, [input]: e.target.value})
   }
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <AuthFormWrapper onSubmit={onSubmit}>

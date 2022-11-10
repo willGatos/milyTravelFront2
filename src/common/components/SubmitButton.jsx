@@ -49,7 +49,7 @@ function SubmitButton({DTO, usableCurrency}) {
         })
         console.log(items)
         const accessToken = localStorage.getItem("accessToken")
-        fetch("https://api.milytravel.net/buys/create-checkout-session", {
+        fetch("/buys/create-checkout-session", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

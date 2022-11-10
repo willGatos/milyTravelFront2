@@ -43,7 +43,7 @@ export default function Home() {
 
   const sendEmail = () => {
     setStateOfEmail("Loading")
-    axios.post("https://api.milytravel.net/user/sendSuggestion", sendEmailObject)
+    axios.post("/user/sendSuggestion", sendEmailObject)
     .then(()=>  {
       setStateOfEmail("success")
       setTimeout(()=>{

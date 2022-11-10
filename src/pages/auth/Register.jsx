@@ -28,7 +28,7 @@ function Register() {
       email: registerObject.email,
       password: registerObject.password,
     }
-    setApiCall("post", "https://api.milytravel.net/user/signup", toSendRegisterObject)
+    setApiCall("post", "/user/signup", toSendRegisterObject)
     .then( response => {
 
       const {accessToken, clientData} = response.data;
