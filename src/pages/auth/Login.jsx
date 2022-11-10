@@ -2,9 +2,9 @@ import {useState, useContext} from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import { useHistory } from 'react-router-dom'
-
+import { Stack, Alert } from '@mui/material'
 import TextField from "@mui/material/TextField";
-
+import EmailState from "../../common/components/EmailState"
 import UserContext from "../../common/helpers/userContext";
 import signHandler from "../../common/helpers/signHandler"
 import AuthFormWrapper from '../../common/components/AuthFormWrapper'
@@ -15,12 +15,14 @@ function Login() {
   password: "",
   confirmationPassword: ""
   });
+  const [isLoading, setIsLoading] = useState(false)
   
   const {selectedComboToBuy,routeToNavigate, setClientData, setAccessToken} = useContext(UserContext);
   const Router = useHistory();
 
   const onSubmit = (e) => {
     e.preventDefault()
+    setIsLoading("Loading")
     const toSendLoginObject = {
       email: loginObject.email,
       password: loginObject.password,
@@ -30,8 +32,11 @@ function Login() {
       const {accessToken, clientData} = response.data;
       signHandler(accessToken, clientData, setClientData, setAccessToken)
       Router.push(routeToNavigate);
+      setIsLoading("success")
     })
-    .catch((e) => console.log("Error De Nuevo", e))
+    .catch((e) => {
+      setIsLoading("fail")
+      console.log("Error De Nuevo", e)})
   }
 
   const handleData = input => e =>{
@@ -40,6 +45,11 @@ function Login() {
 
   return (
     <AuthFormWrapper onSubmit={onSubmit}>
+      
+        <div className="absolute putTop">
+        <EmailState stateOfEmail={isLoading}/>
+        </div>
+
       <h3 style={{textAlign: "center"}}>Iniciar Sesión</h3>
 
         <TextField

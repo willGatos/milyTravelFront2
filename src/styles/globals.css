@@ -87,6 +87,11 @@ iframe{
   margin-top: 15px;
   font-size: 20px;
 }
+.putTop {
+  top: 0;
+  right: 0;
+  left: 0;
+}
 .hero-section-button{
   height: 40px;
   width: 210px;

@@ -8,7 +8,7 @@ import useCheckToken from "../../common/hooks/useCheckToken"
 import signHandler from '../../common/helpers/signHandler'
 import AuthFormWrapper from '../../common/components/AuthFormWrapper'
 import UserContext from "../../common/helpers/userContext";
-
+import EmailState from '../../common/components/EmailState'
 function Register() {
   const [registerObject, setRegisterObject] = useState({
     clientName :"",
@@ -20,9 +20,11 @@ function Register() {
   const setApiCall = useCheckToken();
   const Router = useHistory();
   const {setClientData, setAccessToken, routeToNavigate} = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState(false)
 
   const onSubmit = (event) => {
     event.preventDefault();
+    setIsLoading("Loading")
     const toSendRegisterObject = {
       clientName: registerObject.clientName,
       email: registerObject.email,
@@ -33,9 +35,12 @@ function Register() {
 
       const {accessToken, clientData} = response.data;
       signHandler(accessToken, clientData, setClientData, setAccessToken);
-
+      setIsLoading("success")
       Router.push(routeToNavigate)})
-    .catch(()=>console.log("Error De Nuevo"))
+    .catch(()=>{
+      setIsLoading("fail")
+      console.log("Error De Nuevo")
+    })
     
   }
 
@@ -45,6 +50,9 @@ function Register() {
 
   return (
     <AuthFormWrapper onSubmit={onSubmit}>
+      <div className="absolute putTop">
+        <EmailState stateOfEmail={isLoading}/>
+        </div>
       <h3 style={{textAlign: "center"}}>Suscríbete</h3>
           <BarInput
             name={"clientName"}

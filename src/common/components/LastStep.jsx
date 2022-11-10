@@ -12,9 +12,8 @@ function LastStep({DTO, setDTO, usableCurrency}) {
 
   return (
     <div style={{width: "100%"}} className='relative flex flex-column justify-center'>
-      <div style={{top: 0,
-right: 0,
-left: 0}} className='absolute'> {isLoading
+
+      <div  className='absolute putTop'> {isLoading
       && <Alert severity="info">   Cargando         </Alert>}</div>
     <h3 className="text-center">Verificación de Información</h3>
       <h4>Información del Cliente</h4>
