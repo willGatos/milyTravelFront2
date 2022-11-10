@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import UserContext from '../helpers/userContext';
-import axios from 'axios';
+
 function SubmitButton({DTO, usableCurrency}) {
     const {newCombos} = useContext(UserContext);
     let items  = [];
@@ -35,11 +35,9 @@ function SubmitButton({DTO, usableCurrency}) {
                 serviceCharge.priceInCents = +valueToCharge;
               }
             }
-            console.log("serviceCharge",serviceCharge)
             return 0
           })
           items.push(serviceCharge)
-          console.log(items)
         }
         items.push({
           id: 1,
@@ -47,16 +45,18 @@ function SubmitButton({DTO, usableCurrency}) {
           name: DTO.stripeProductName,
           priceInCents: DTO.stripeProductPrice
         })
-        console.log(items)
         const accessToken = localStorage.getItem("accessToken")
-        axios.post("/buys/create-checkout-session",
-        {
+        fetch("https://api.milytravel.net/buys/create-checkout-session", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer '+ accessToken
+         },
+        body: JSON.stringify({
           emailRequest: DTO,
           items,
-        }, {
-        headers: { 
-          'Authorization': 'Bearer '+ accessToken
-         }})
+        }),
+        })
         .then(res => {
         if (res.ok) return res.json()
         return res.json().then(json => Promise.reject(json))
