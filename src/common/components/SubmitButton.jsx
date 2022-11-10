@@ -1,7 +1,7 @@
 import {useContext} from 'react';
 import UserContext from '../helpers/userContext';
 
-function SubmitButton({DTO, usableCurrency}) {
+function SubmitButton({DTO, usableCurrency, setIsLoading}) {
     const {newCombos} = useContext(UserContext);
     let items  = [];
     let serviceCharge = {
@@ -11,6 +11,9 @@ function SubmitButton({DTO, usableCurrency}) {
       priceInCents: 0
     };
     const onSubmit= ()=>{
+      setIsLoading(true)
+      
+
         console.log(DTO)
         if(DTO.combo) {
           DTO.stripeProductName = DTO.combo
@@ -61,8 +64,15 @@ function SubmitButton({DTO, usableCurrency}) {
         if (res.ok) return res.json()
         return res.json().then(json => Promise.reject(json))
         })
-        .then(({ url }) => window.location = url)
-        .catch(e => console.error(e.error))
+        .then(({ url }) => {
+          setIsLoading(false)
+          window.location = url
+        
+        })
+        .catch(e => {
+          setIsLoading(false)
+          console.error(e.error)
+        })
       }
   return (
         <button
