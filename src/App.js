@@ -34,7 +34,7 @@ function App() {
   const [newCombos, setNewCombos] = useState(combos)
   const [actualStep, setActualStep] = useState(0)
   useEffect(()=>{
-    ReactGA.initialize('G-7JFYKPLW22');
+    ReactGA.initialize('G-8DHC3DNSZL');
     ReactGA.pageview(window.location.pathname + window.location.search);
     const accessToken = localStorage.getItem("accessToken")
 
