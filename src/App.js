@@ -23,7 +23,6 @@ import PasswordChange from './pages/auth/PasswordChange';
 import axios from "axios"
 import Home from './pages';
 import Admin from './pages/admin';
-import ReactGA from 'react-ga';
 
 function App() {
 
@@ -34,8 +33,6 @@ function App() {
   const [newCombos, setNewCombos] = useState(combos)
   const [actualStep, setActualStep] = useState(0)
   useEffect(()=>{
-    ReactGA.initialize('G-8DHC3DNSZL');
-    ReactGA.pageview(window.location.pathname + window.location.search);
     const accessToken = localStorage.getItem("accessToken")
 
     if(accessToken)
