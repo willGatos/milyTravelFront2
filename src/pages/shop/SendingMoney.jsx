@@ -24,6 +24,7 @@ function SendingMoney() {
     principalStreet: "",
     middleStreets: "",
     buildingNumber: "",
+    apartment: "",
     //stripe Info
     stripeProductName: "",
     stripeProductPrice: 0,

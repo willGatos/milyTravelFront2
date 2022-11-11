@@ -40,6 +40,7 @@ function UsersSection() {
         principalStreet : "",
         middleStreets : "",
         buildingNumber: "",
+        apartment: "",
         carnet: ""
     })
 

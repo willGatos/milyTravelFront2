@@ -114,6 +114,15 @@ function Step2({DTO, setDTO}) {
             required
         />
 
+        <TextField
+            sx={{width: "100%"}}
+            name={"apartment"}
+            label={"Apartamento (Opcional)"}
+            value={DTO.apartment}
+            onChange={handleData("apartment")}
+            variant="standard"
+        />
+
         <div className='flex justify-center'>
 
           <BackButton

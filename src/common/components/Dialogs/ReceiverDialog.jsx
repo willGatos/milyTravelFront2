@@ -111,6 +111,15 @@ export default function ReceiverDialog({
               variant="standard"
             />
 
+          <TextField
+            sx={{width: "100%"}}
+            name={"apartment"}
+            label={"Apartamento (Opcional)"}
+            value={updateValues.apartment}
+            onChange={handleData("apartment")}
+            variant="standard"
+          />
+
             <div className="flex justify-center">
               <button 
                 disabled={isLoading}
