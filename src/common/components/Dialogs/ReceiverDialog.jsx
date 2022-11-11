@@ -105,7 +105,7 @@ export default function ReceiverDialog({
               name={"buildingNumber"}
               sx={{width:"100%"}}
               value={updateValues.buildingNumber}
-              label={"Edificio"}
+              label={"Número"}
               onChange={handleData("buildingNumber")}
               required
               variant="standard"

@@ -107,8 +107,7 @@ function Step2({DTO, setDTO}) {
         <TextField
             sx={{width: "100%"}}
             name={"buildingNumber"}
-            type={"number"}
-            label={"Edificio"}
+            label={"Número"}
             value={DTO.buildingNumber}
             onChange={handleData("buildingNumber")}
             variant="standard"

@@ -1,6 +1,4 @@
 
 TODO: Recordar poner en el CreateCombo un array con los contains
 
-TODO: Hacer animacones de Inicio
-
 TODO: Hacer Pruebas generales
