@@ -20,7 +20,6 @@ function SeeCombos() {
     axios.get("/buys/getComboToUsers")
     .then((response)=> {
       const visibleCombos = response.data
-      console.log("vis ",visibleCombos)
       setNewCombos(visibleCombos)
     })
   },[])

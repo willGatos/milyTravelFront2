@@ -12,11 +12,6 @@ function CurrencyDialog({
     handleData,
 }) {
 
-  useEffect(()=>{
-    console.log("hola",callToActionFunction)
-  },[])
-
-   
   return (
     <div>
         <Dialog 

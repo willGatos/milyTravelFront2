@@ -5,7 +5,6 @@ import InputLabel from '@mui/material/InputLabel';
 
 function SelectInput({arrayToMenuItem=[], label, value, object, setObject}) {
   const handleData = input => e =>{
-        console.log(label,value, object)
         setObject({...object, [input]: e.target.value})
   }
   return (

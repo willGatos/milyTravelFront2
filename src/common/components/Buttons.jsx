@@ -2,8 +2,7 @@ function Buttons({ DTO, actualStep, setActualStep }) {
   
   return (
     <div className='flex'>
-       
-    {console.log("actualStep",actualStep)}
+      
           {actualStep !== 3
           ? <button
               type="submit"

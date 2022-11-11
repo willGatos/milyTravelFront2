@@ -20,7 +20,6 @@ function BuyingStep1({
 
   const handleChange = (event) => {
     const selected = event.target.value
-    console.log(selected)
     setSelectedReceiver(selected);
     setSelectedComboToBuy(selected)
     registeredReceivers.map(receiver=>{

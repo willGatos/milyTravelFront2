@@ -11,14 +11,12 @@ function Success({query2}) {
     const query = Object.fromEntries(new URLSearchParams(window.location.search))
     if(hasRun.current){
       if(query.combo){
-        console.log("Router.query.combo",query)
         axios.post("/buys/sendCombo", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })
         .catch((error)=> console.log(error))
       }
       if(query.amount){
-        console.log("Router.query.amount",query)
         axios.post("/buys/sendingMoney", query,{
           headers: {'Authorization': 'Bearer '+ accessToken}
         })

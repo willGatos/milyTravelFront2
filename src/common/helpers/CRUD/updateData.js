@@ -8,7 +8,6 @@ const updateData = (
     setUpdateOpenDialog,
     setUpdateIsLoading,
 ) => {
-    console.log(selectedObject)
     const accessToken = localStorage.getItem("accessToken");
     const toUpdateObject = {
       CurrencyId: selectedObject._id,
@@ -22,7 +21,6 @@ const updateData = (
     .then((e)=>{
       setAllCurrency((prevAllCombos) => {
         const value =  prevAllCombos.map(e => {
-            console.log(e._id === selectedObject._id)
             if(e._id === selectedObject._id) return updateCurrencyToDeliever;
             return e;
         })

@@ -8,7 +8,6 @@ function NavbarTop({children}) {
   const {accessToken, setAccessToken, clientData}=useContext(UserContext)
   const [userFirstName, setUserFirstName] = useState("")
   useEffect(() => {
-    console.log("clientData",clientData)
     if(clientData.clientName) setUserFirstName(clientData.clientName.split(' ')[0]) 
     
     setAccessToken(localStorage.getItem("accessToken"))

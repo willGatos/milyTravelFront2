@@ -2,7 +2,6 @@ import { TextField } from "@mui/material";
 
 function BarInput({name,label, value, object, setObject, variant="standard", sx={}}) {
     const handleData = input => e =>{
-        console.log(label,value, object)
         setObject({...object, [input]: e.target.value})
     }
     return <TextField

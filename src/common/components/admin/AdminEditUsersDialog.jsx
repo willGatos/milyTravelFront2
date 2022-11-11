@@ -16,7 +16,6 @@ function UserAdminDialogs({
     const handleDataForUpdate = input => e => setUpdateUser({...updateUser, [input]: e.target.value})
 
     const handleChangeForCreating = (event) => {
-        console.log(event.target.checked)
         setUpdateUser({...updateUser, isAuth : event.target.checked})};
 
     const update = () => updateData(

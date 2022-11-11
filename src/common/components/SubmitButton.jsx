@@ -12,9 +12,6 @@ function SubmitButton({DTO, usableCurrency, setIsLoading}) {
     };
     const onSubmit= ()=>{
       setIsLoading(true)
-      
-
-        console.log(DTO)
         if(DTO.combo) {
           DTO.stripeProductName = DTO.combo
           const comboObject = newCombos.filter((e)=> e.name === DTO.combo)

@@ -6,7 +6,6 @@ import combos from '../helpers/combosRelationship';
 
 function ComboSelector({value, object, setObject}) {
   const handleData = input => e =>{
-        console.log(value, object)
         setObject({...object, [input]: e.target.value})
   }
   

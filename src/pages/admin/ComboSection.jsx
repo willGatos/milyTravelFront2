@@ -39,7 +39,6 @@ function ComboSection() {
                 }
             ).then(e => {
                 if(!e.data.isAdmin) Router.push("/")
-                console.log("isAdmin ",e.data.isAdmin)
                 }
             )
             .catch( e => console.log(e) )
@@ -77,7 +76,6 @@ function ComboSection() {
             quality: 0.9,
 
             success(result) {
-              console.log(isLoading)
               const formData = new FormData();
               formData.append("file", result)
               formData.append("upload_preset", `zfvhwnfp`)
@@ -90,13 +88,10 @@ function ComboSection() {
             })
       
             .catch( e => {
-                
               setIsLoading(false)
-              console.log(e)
             })},
             error(err) {
               setIsLoading(false)
-              console.log("error2",err);
             },
           })
       }
@@ -110,7 +105,6 @@ function ComboSection() {
         quality: 0.9,
 
         success(result) {
-          console.log(isLoading)
           const formData = new FormData();
           formData.append("file", result)
           formData.append("upload_preset", `zfvhwnfp`)
@@ -125,11 +119,9 @@ function ComboSection() {
         .catch( e => {
             
           setIsLoading(false)
-          console.log(e)
         })},
         error(err) {
           setIsLoading(false)
-          console.log("error2",err);
         },
       })
       }

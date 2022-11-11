@@ -14,7 +14,6 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
     axios.get("/buys/getComboToUsers")
     .then((response)=> {
       const visibleCombos = response.data
-      console.log("vis",visibleCombos)
       setNewCombos(visibleCombos)
     })
   },[])
@@ -74,7 +73,7 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
     speed={400}
     easing="linear"
   >
-    {newCombos.map((combo, key)=>{console.log(combo, key)
+    {newCombos.map((combo, key)=>{
     return(
       <LazyLoadImage
       onClick={()=> OpenDialogAndCheckCombo(combo)}

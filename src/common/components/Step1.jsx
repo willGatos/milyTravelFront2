@@ -35,7 +35,6 @@ function Step1({
 
   const handleChange = (event) => {
     const selected = event.target.value
-    console.log(selected)
     setSelectedReceiver(selected);
     registeredReceivers.map(receiver=>{
       if(receiver.receiverName === selected){
@@ -63,7 +62,6 @@ function Step1({
         if(selectedValue === currency.nameOfTheCurrency){
           setMinimumAmountOfMoney(currency.minimumValueAllowed)
           setExchangeRate(currency.exchangeRateValuePerDollar)
-          console.log(currency.exchangeRateValuePerDollar)
         }
         return 0
       })
@@ -125,7 +123,6 @@ function Step1({
 
       {DTO.amount < (+minimumAmountOfMoney * exchangeRate) &&
       <p style={{color: errorOfMin? "red" : "black" }}>
-        {console.log(DTO.amount <= (+minimumAmountOfMoney * exchangeRate), DTO.amount , +minimumAmountOfMoney * exchangeRate)}
         El mínimo requerido es de {minimumAmountOfMoney} USD
       </p>
       }

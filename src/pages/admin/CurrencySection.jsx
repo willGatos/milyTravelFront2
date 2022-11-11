@@ -15,7 +15,6 @@ function CurrencySection() {
 
     useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    console.log("Gola")
     axios.get(
     "/currency/get",
     {headers: {'Authorization': 'Bearer '+ accessToken}}
