@@ -46,7 +46,7 @@ function SubmitButton({DTO, usableCurrency, setIsLoading}) {
           priceInCents: DTO.stripeProductPrice
         })
         const accessToken = localStorage.getItem("accessToken")
-        fetch("http://localhost:3001/buys/create-checkout-session", {//https://api.milytravel.net
+        fetch("https://api.milytravel.net/buys/create-checkout-session", {//https://api.milytravel.net
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
