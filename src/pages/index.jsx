@@ -37,7 +37,8 @@ export default function Home() {
     price: "105",
     image: "https://res.cloudinary.com/dq98mlb66/image/upload/v1666563055/Combo_Mixto_1_zmzsrk.jpg",
     contains: ["Mixto","Pollo"],
-    isAvailable: true
+    isAvailable: true,
+    provinceAvailability: ["La Habana"]
   })
   const [openDialog, setOpenDialog] = useState(false)
 
