@@ -202,10 +202,12 @@ export default function Home() {
         onClose={()=>setOpenDialog(false)}>
         <div className='flex justify-center align-center flex-column'>
           <img 
-            style={{width: "90%",height: "94%"}} 
+            style={{width: "100%",height: "94%"}} 
             src={selectedCombo.image} 
             alt=""
           />
+          <p>{selectedCombo.name}</p>
+          <p>Disponible en: {selectedCombo.provinceAvailability.map(e => e + ", ")}</p>
           <button 
             onClick={()=>{
               setSelectedComboToBuy(selectedCombo)

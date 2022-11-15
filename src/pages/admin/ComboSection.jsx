@@ -46,8 +46,8 @@ function ComboSection() {
 
     //TODO:Ver como hacer para que los nuevos combos no sean 
     //     los de los Users, sino, los del Admin
-    const [updateValues, setUpdateValues] =  useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
-    const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", contains: [], isAvailable: true})
+    const [updateValues, setUpdateValues] =  useState ({name:"", price:"", image: "", provinceAvailability: [], isAvailable: true})
+    const [toCreateCombo,setToCreateCombo] = useState ({name:"", price:"", image: "", provinceAvailability: [], isAvailable: true})
 
     const Router = useHistory()
 
@@ -86,7 +86,6 @@ function ComboSection() {
                 setIsLoading(false)
                 return url;
             })
-      
             .catch( e => {
               setIsLoading(false)
             })},
@@ -170,12 +169,13 @@ function ComboSection() {
         <AdminDialog
           handleData={handleDataForUpdate}
           handleChange={handleChangeForUpdate}
+          setValues={setUpdateValues}
           handlePrincipalImageChange={handlePrincipalImageChangeToUpdate}
           isLoading={isLoading}
           openDialog={openUpdateDialog}
           setOpenDialog={setOpenUpdateDialog}
           callToActionFunction={update}
-          updateValues={updateValues}
+          Values={updateValues}
         />
 
         <AdminDialog
@@ -186,7 +186,8 @@ function ComboSection() {
           openDialog={openCreateDialog}
           setOpenDialog={setOpenCreateDialog}
           callToActionFunction={create}
-          updateValues={toCreateCombo}
+          Values={toCreateCombo}
+          setValues={setToCreateCombo}
         />
     </div>
     </div>

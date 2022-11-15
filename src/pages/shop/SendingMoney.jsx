@@ -3,6 +3,7 @@ import Step1 from '../../common/components/Step1'
 import axios from "axios"
 import UserContext from '../../common/helpers/userContext'
 import MultiStepForm from '../../common/components/MultiStepForm'
+import newReceiver from '../../common/helpers/newReceiver'
 
 function SendingMoney() {
   const [sendingMoney, setSendingMoney] = useState({
@@ -59,7 +60,7 @@ function SendingMoney() {
           clientName: user.clientName}))
 
       setUsableCurrency(currency)
-      setRegisteredReceivers(user.receivers)
+      setRegisteredReceivers([newReceiver,...user.receivers])
     })
     .catch((e) => console.log(e))
 

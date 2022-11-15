@@ -10,8 +10,8 @@ const updateData = (
 ) => {
     const accessToken = localStorage.getItem("accessToken");
     const toUpdateObject = {
-      CurrencyId: selectedObject._id,
-      updateCurrencyDTO: updateCurrencyToDeliever,
+      id: selectedObject._id,
+      updateDTO: updateCurrencyToDeliever,
     }
 
     axios.patch( 

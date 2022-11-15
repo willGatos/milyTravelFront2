@@ -13,11 +13,9 @@ import UserContext from '../helpers/userContext';
 function Step2({DTO, setDTO}) {
 
 
-  const {setActualStep} = useContext(UserContext);
+  const {newCombos, setActualStep} = useContext(UserContext);
 
-  const handleData = input => e =>{
-    setDTO({...DTO, [input]: e.target.value})
-  }
+  const handleData = input => e => setDTO({...DTO, [input]: e.target.value})
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -26,6 +24,7 @@ function Step2({DTO, setDTO}) {
 
   return (
     <form onSubmit={onSubmit} style={{width: "100%"}} className='flex flex-column justify-center'>
+      {console.log(newCombos.map(e=>e.name))}
       <h3>Información del Destinatario</h3>
         <FormControl 
           variant="standard"
@@ -40,12 +39,24 @@ function Step2({DTO, setDTO}) {
         color="primary"
         required
       >
-        { townshipProvince.map((menuItem, key) =>
-           <MenuItem 
-            value={menuItem.province} 
-            key={key}
-            >{menuItem.province}</MenuItem>
-        )}
+        {
+        (DTO.combo) ?
+            (newCombos.map((e,key)=>
+                (e.name === DTO.combo) &&
+                e.provinceAvailability.map(province => 
+                <MenuItem 
+                value={province} 
+                key={key}
+                >{province}</MenuItem>)
+
+              ))
+         :
+          (townshipProvince.map((menuItem, key) =>
+             <MenuItem 
+              value={menuItem.province} 
+              key={key}
+              >{menuItem.province}</MenuItem>))
+        }
       </Select>
     </FormControl>
 
@@ -81,7 +92,7 @@ function Step2({DTO, setDTO}) {
           <TextField
             sx={{width: "100%"}}
             name={"distribution"}
-            label={"Reparto"}
+            label={"Reparto (Opcional)"}
             value={DTO.distribution}
             onChange={handleData("distribution")}
             variant="standard"

@@ -1,11 +1,16 @@
 import BarInput from './BarInput'
 import ForwardButton from './ForwardButton'
 import BackButton from './BackButton'
-import { useState, useContext } from 'react'
+import { useState, useEffect,useContext } from 'react'
 import UserContext from '../helpers/userContext'
 import { TextField } from '@mui/material'
 
 function Step2({DTO,setDTO, usableCurrency}) {
+
+  useEffect(()=>{
+    if(DTO.receiverName === "Nuevo Destinatario")
+    setDTO({...DTO, receiverName: ""})
+  },[])
 
   const handleData = input => e =>{
     setDTO({...DTO, [input]: e.target.value})

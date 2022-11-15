@@ -4,7 +4,11 @@ import Dialog from "@mui/material/Dialog"
 import UserContext from '../common/helpers/userContext';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import provinceAndTownships from '../common/helpers/provinceAndTownshipsInCuba';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 function SeeCombos() {
 
@@ -12,24 +16,28 @@ function SeeCombos() {
           accessToken, newCombos, setNewCombos} = useContext(UserContext);
 
   const [actualFilter, setActualFilter] = useState("")
-  const [selectedCombo, setSelectedCombo] = useState(newCombos[0])
+  const [selectedCombo, setSelectedCombo] = useState({name:"", price:"", image: "", provinceAvailability: [], isAvailable: true})
   const [arrayFiltered, setArrayFiltered] = useState(newCombos)
   const [openDialog, setOpenDialog] = useState(false)
 
   useEffect(()=>{
     axios.get("/buys/getComboToUsers")
     .then((response)=> {
-      const visibleCombos = response.data
-      setNewCombos(visibleCombos)
+      const visibleCombos = response.data;
+      setNewCombos(visibleCombos);
     })
   },[])
 
+  const handleChange = (event) => {
+    const selected = event.target.value;
+    setActualFilter(selected);
+  };
   const Router = useHistory()
 
   useEffect(()=>{
 
     setArrayFiltered(() => newCombos.filter(combo => {
-      if(actualFilter) return  combo.contains.includes(actualFilter)
+      if(actualFilter) return  combo.provinceAvailability.includes(actualFilter)
       else return true
     }))
   },[actualFilter, newCombos])
@@ -41,31 +49,24 @@ function SeeCombos() {
 
   return (
     <div style={{paddingTop: "10vh"}}>
-      {/* <Link to={"/"}>
-        <div className='goBackComboButton bg-blue font-color-w text-center flex justify-center '>
-          <img style={{width:"15px"}} src={LeftArrow} alt="<"/>
+      <div className='flex justify-center' style={{marginBottom: "40px"}}>
+        <div style={{width: "300px"}}>
+        <FormControl variant="standard" fullWidth sx={{width: "100%"}}>
+        <InputLabel id="demo-simple-select-label">Seleccionar Destinatario</InputLabel>
+        <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={actualFilter}
+            label="Seleccionar Destinatario"
+            onChange={handleChange}
+          >
+            {provinceAndTownships.map((e, key)=> 
+            <MenuItem key={key} value={e.province}>{e.province}</MenuItem>)}
+          </Select>
+          </FormControl>
         </div>
-      </Link> */}
-      <div className="flex justify-center buttonsContainer">
-      
-        <button
-         className={(actualFilter==="") &&'activeButton'}
-         onClick={()=> setActualFilter("")}>Todos</button>
-        <button 
-          className={(actualFilter==="Mixto") && 'activeButton'}
-          onClick={()=> setActualFilter("Mixto")}>Mixto</button>
-        <button 
-          className={(actualFilter==="Res") && 'activeButton'}
-          onClick={()=> setActualFilter("Res")}>Res</button>
       </div>
-      <div className="flex justify-center buttonsContainer">
-        <button 
-         className={(actualFilter==="Pollo") && 'activeButton'}
-         onClick={()=> setActualFilter("Pollo")}>Pollo</button>
-        <button
-          className={actualFilter==="Cerdo" && 'activeButton'}
-          onClick={()=> setActualFilter("Cerdo")}>Cerdo</button>
-      </div>
+     
       <AnimatePresence>
         <motion.div 
           className='combosContainer'
@@ -101,6 +102,8 @@ function SeeCombos() {
         onClose={()=>setOpenDialog(false)}>
         <div className='flex justify-center align-center flex-column'>
           <img style={{width: "90%",height: "94%"}}src={selectedCombo.image} alt=""/>
+          <p>{selectedCombo.name}</p>
+          <p>Disponible en: {selectedCombo.provinceAvailability.map(e => e + ", ")}</p>
           <button 
             onClick={()=>{
               setSelectedComboToBuy(selectedCombo)
@@ -119,3 +122,32 @@ function SeeCombos() {
 }
 
 export default SeeCombos
+
+/**
+ *  <Link to={"/"}>
+        <div className='goBackComboButton bg-blue font-color-w text-center flex justify-center '>
+          <img style={{width:"15px"}} src={LeftArrow} alt="<"/>
+        </div>
+      </Link> 
+ * 
+ *  <div className="flex justify-center buttonsContainer">
+      
+        <button
+         className={(actualFilter==="") &&'activeButton'}
+         onClick={()=> setActualFilter("")}>Todos</button>
+        <button 
+          className={(actualFilter==="Mixto") && 'activeButton'}
+          onClick={()=> setActualFilter("Mixto")}>Mixto</button>
+        <button 
+          className={(actualFilter==="Res") && 'activeButton'}
+          onClick={()=> setActualFilter("Res")}>Res</button>
+      </div>
+      <div className="flex justify-center buttonsContainer">
+        <button 
+         className={(actualFilter==="Pollo") && 'activeButton'}
+         onClick={()=> setActualFilter("Pollo")}>Pollo</button>
+        <button
+          className={actualFilter==="Cerdo" && 'activeButton'}
+          onClick={()=> setActualFilter("Cerdo")}>Cerdo</button>
+      </div>
+ */

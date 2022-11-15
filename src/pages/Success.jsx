@@ -6,6 +6,7 @@ import axios from 'axios';
 function Success({query2}) {
   const Router = useParams ();
   let hasRun = useRef(true)
+  
   useEffect(()=>{
     const accessToken = localStorage.getItem("accessToken")
     const query = Object.fromEntries(new URLSearchParams(window.location.search))

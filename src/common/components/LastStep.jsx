@@ -26,14 +26,14 @@ function LastStep({DTO, setDTO, usableCurrency}) {
         <p>Nombre: {DTO.receiverName}</p>
         <p>Carnet: {DTO.carnet}</p>
         <p>Teléfono: {DTO.phone}</p>
-      {DTO.receiverCard !== "" && <p>Tarjeta de Destinatario:
+      {DTO.receiverCard && <p>Tarjeta de Destinatario:
          {DTO.receiverCard}</p>}
 
     <h4>Dirección Exacta de Envío</h4>
         <p>Provincia:{DTO.province}</p>
         <p>Municipio:{DTO.township}</p>
-        <p>Reparto:  {DTO.distribution}</p>
-        <p>Dirección: {DTO.principalStreet} e/ {DTO.middleStreets} No.{DTO.buildingNumber}</p>
+        {DTO.distribution && <p>Reparto:  {DTO.distribution}</p>}
+        <p>Dirección: {DTO.principalStreet} e/ {DTO.middleStreets} No.{DTO.buildingNumber} {DTO.apartment ? "Apt. " + DTO.apartment : "Planta Baja" }</p>
         
         <div className='flex justify-center'>
           <BackButton/>

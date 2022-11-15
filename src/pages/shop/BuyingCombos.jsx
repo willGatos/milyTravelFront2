@@ -4,31 +4,33 @@ import axios from "axios"
 import BuyingStep1 from '../../common/components/BuyingStep1'
 import UserContext from '../../common/helpers/userContext'
 import MultiStepForm from '../../common/components/MultiStepForm'
-
+import newReceiver from '../../common/helpers/newReceiver'
 function BuyingCombos() {
-
+  
   const {clientData, selectedComboToBuy} = useContext(UserContext)
-
-  const [buyingCombos, setBuyingCombos] = useState({
+  
+  const initialFormState = {
     //DEL CLIENTE
     clientName: "",
     email: "",
     combo: selectedComboToBuy.name,
     price: selectedComboToBuy.price,
     creditCard: "",
-    receiverCard: "",
     //DEL DESTINATARIO
     receiverName: "",
     carnet: "",
     province: "",
     township: "",
-    city: "",
-    address: "",
+    principalStreet:"",
+    middleStreets:"",
+    buildingNumber:"",
+    distribution:"",
     phone: "",
      //stripe Info
     stripeProductName: "",
     stripeProductPrice: 0,
-  })
+  }
+  const [buyingCombos, setBuyingCombos] = useState(initialFormState)
 
   const [selectedReceiver, setSelectedReceiver] = useState("")
   const [registeredReceivers, setRegisteredReceivers] = useState([])
@@ -61,7 +63,7 @@ function BuyingCombos() {
           clientName: user.clientName,
         }
       })
-      setRegisteredReceivers(receiversData)
+      setRegisteredReceivers([newReceiver,...receiversData])
     })
     .catch(e=> console.log(e))
   },[])

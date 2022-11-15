@@ -1,10 +1,1 @@
-
-TODO: Recordar poner en el CreateCombo un array con los contains
-
 TODO: Hacer Pruebas generales
-
-TODO: Arreglar combos
-
-TODO: Revisar las compras de combos y el correo a enviar
-
-TODO: Disponibiliad por provincia en el admin de los combos

@@ -20,7 +20,8 @@ export default function Cards({
     name, 
     image, 
     price, 
-    isAvailable,} = singleCombo;
+    isAvailable,
+    provinceAvailability,} = singleCombo;
   return (
     <Card onClick={()=>{
       setUpdateValues(singleCombo)
@@ -38,8 +39,8 @@ export default function Cards({
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Precio: {price} <br/>
-          Estado: {isAvailable? "Disponible": "No Disponible"}
-
+          Estado: {isAvailable? "Disponible": "No Disponible"}<br/>
+          {provinceAvailability && "Provincia: " + provinceAvailability}
         </Typography>
       </CardContent>
       <CardActions>

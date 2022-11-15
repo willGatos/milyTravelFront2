@@ -11,13 +11,17 @@ function CurrencyDialog({
     callToActionFunction,
     handleData,
 }) {
+  const onSubmit = (e) =>{
+    e.preventDefault()
+    callToActionFunction()
+  }
 
   return (
     <div>
         <Dialog 
             open={openDialog}
             onClose={() => setOpenDialog(false)}>
-        <form onSubmit={callToActionFunction}
+        <form onSubmit={onSubmit}
             style={{padding: "20px", gap: "10px"}}
             className='flex justify-center align-center flex-column'>
 

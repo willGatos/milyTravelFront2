@@ -2,13 +2,14 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import combos from '../helpers/combosRelationship';
+import UserContext from '../helpers/userContext';
+import { useContext } from 'react';
 
 function ComboSelector({value, object, setObject}) {
-  const handleData = input => e =>{
-        setObject({...object, [input]: e.target.value})
-  }
-  
+  const {newCombos}=useContext(UserContext);
+
+  const handleData = input => e => setObject({...object, [input]: e.target.value});
+
   return (
     <FormControl variant="standard" sx={{width: "100%"}}>
       <InputLabel id="demo-simple-select-helper-label">Combo a entregar</InputLabel>
@@ -19,7 +20,7 @@ function ComboSelector({value, object, setObject}) {
       onChange={handleData("combo")}
       required
       >
-        { combos.map((combo, key) =>
+        { newCombos.map((combo, key) =>
            <MenuItem value={combo.name} key={key}>{combo.name}</MenuItem>
         )}
       </Select>
