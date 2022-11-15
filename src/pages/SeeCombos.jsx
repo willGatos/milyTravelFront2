@@ -52,12 +52,12 @@ function SeeCombos() {
       <div className='flex justify-center' style={{marginBottom: "40px"}}>
         <div style={{width: "300px"}}>
         <FormControl variant="standard" fullWidth sx={{width: "100%"}}>
-        <InputLabel id="demo-simple-select-label">Seleccionar Destinatario</InputLabel>
+        <InputLabel id="demo-simple-select-label">Seleccionar Destino</InputLabel>
         <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={actualFilter}
-            label="Seleccionar Destinatario"
+            label="Seleccionar Destino"
             onChange={handleChange}
           >
             {provinceAndTownships.map((e, key)=> 
