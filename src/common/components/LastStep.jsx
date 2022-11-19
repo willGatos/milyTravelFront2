@@ -33,7 +33,7 @@ function LastStep({DTO, setDTO, usableCurrency}) {
         <p>Provincia:{DTO.province}</p>
         <p>Municipio:{DTO.township}</p>
         {DTO.distribution && <p>Reparto:  {DTO.distribution}</p>}
-        <p>Dirección: {DTO.principalStreet} e/ {DTO.middleStreets} No.{DTO.buildingNumber} {DTO.apartment ? "Apt. " + DTO.apartment : "Planta Baja" }</p>
+        <p>Dirección: {DTO.principalStreet} e/ {DTO.middleStreets} No.{DTO.buildingNumber} {DTO.apartment ? "Apt. " + DTO.apartment : "" }</p>
         
         <div className='flex justify-center'>
           <BackButton/>
