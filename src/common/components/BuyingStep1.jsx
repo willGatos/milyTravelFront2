@@ -23,15 +23,20 @@ function BuyingStep1({
     setSelectedReceiver(selected);
     setSelectedComboToBuy(selected)
     registeredReceivers.map(receiver=>{
+      //TODO: RECORDAR AGRUPAR EN FUNCION
       if(receiver.receiverName === selected){
         setDTO({...DTO,
         receiverName: receiver.receiverName,
         carnet: receiver.carnet,
+        phone: receiver.phone,
+        //Exact Direction
         province: receiver.province,
         township: receiver.township,
-        city: receiver.city,
-        address: receiver.address,
-        phone: receiver.phone,
+        distribution: receiver.distribution,
+        principalStreet: receiver.principalStreet,
+        middleStreets: receiver.middleStreets,
+        buildingNumber: receiver.buildingNumber,
+        apartment: receiver.apartment
       })
       }
     })

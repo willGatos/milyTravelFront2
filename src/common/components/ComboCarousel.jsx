@@ -4,7 +4,6 @@ import ReactSimplyCarousel from 'react-simply-carousel';
 import ArrowLeft from "../../public/LeftArrow.svg"
 import ArrowRight from "../../public/ArrowRight.svg"
 import axios from "axios";
-import combos from "../helpers/combosRelationship";
 import UserContext from "../helpers/userContext";
 
 function ComboCarousel({OpenDialogAndCheckCombo}) {
@@ -84,12 +83,6 @@ function ComboCarousel({OpenDialogAndCheckCombo}) {
     )
   })
     }
-      {/* 
-      ))}*/
-      }
-    
-        
-    
     </ReactSimplyCarousel>
 )
 }

@@ -5,7 +5,7 @@ import App from './App';
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from 'axios';
 
-axios.defaults.baseURL = "https://api.milytravel.net" //http://localhost:3001
+axios.defaults.baseURL = "http://localhost:3001" //https://api.milytravel.net
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>

@@ -49,6 +49,7 @@ function Step1({
         principalStreet: receiver.principalStreet,
         middleStreets: receiver.middleStreets,
         buildingNumber: receiver.buildingNumber,
+        apartment: receiver.apartment
       })
       }
     })
