@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import provinceAndTownships from '../../helpers/provinceAndTownshipsInCuba';
+import provinceAndTownships from '../../helpers/townshipProvince';
 import ClearIcon from '@mui/icons-material/Clear';
 function AdminDialog({
     openDialog, 

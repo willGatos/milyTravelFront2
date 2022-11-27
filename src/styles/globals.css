@@ -262,7 +262,7 @@ button{
   background: #ffffffa6;
   position: fixed;
   width: 100vw;
-  z-index: 10000;
+  z-index: 1000;
 }
 .navbar a{
   margin: 15px;

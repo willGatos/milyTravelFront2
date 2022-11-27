@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import provinceAndTownships from '../common/helpers/provinceAndTownshipsInCuba';
+import provinceAndTownships from '../common/helpers/townshipProvince';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
